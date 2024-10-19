@@ -7,6 +7,73 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/efabCheckin"
+        android:layout_width="wrap_content"
+        android:layout_height="86dp"
+        android:layout_margin="8dp"
+        android:contentDescription="@string/app_name"
+        android:gravity="center"
+
+        android:text="@string/checkin"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:translationY="-50dp"
+        app:layout_anchor="@+id/fabMaps"
+        app:layout_anchorGravity="top|center" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabQuiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:translationX="-52.5dp"
+        app:layout_anchor="@+id/fabNews"
+        app:layout_anchorGravity="start|center"
+        app:srcCompat="@drawable/idea_icon" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabNews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:translationX="-52.5dp"
+        app:layout_anchor="@+id/fabMaps"
+        app:layout_anchorGravity="start|center"
+        app:srcCompat="@drawable/newspaper_icon" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabMaps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:translationX="-52.5dp"
+        app:layout_anchor="@+id/fabChats"
+        app:layout_anchorGravity="start|center"
+        app:srcCompat="@drawable/location_icon" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabChats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:translationX="-52.5dp"
+        app:layout_anchor="@+id/fabAchievements"
+        app:layout_anchorGravity="start|center"
+        app:srcCompat="@drawable/chat_icon" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAchievements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="16dp"
+        app:srcCompat="@drawable/trophy_icon" />
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,14 +87,5 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_main" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="16dp"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
