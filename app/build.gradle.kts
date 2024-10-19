@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+
 }
 
 android {
@@ -46,6 +47,10 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation("com.google.android.gms:play-services-maps:19.0.0") // maps!
+    implementation("com.google.android.gms:play-services-location:21.3.0") //location
+    implementation("androidx.core:core-ktx:1.12.") // for ActivityCompat?
+    implementation("com.google.android.material:material:1.1.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
