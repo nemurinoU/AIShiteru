@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.activity)
     implementation("com.google.android.gms:play-services-maps:19.0.0") // maps!
     implementation("com.google.android.gms:play-services-location:21.3.0") //location
     implementation("androidx.core:core-ktx:1.12.") // for ActivityCompat?
