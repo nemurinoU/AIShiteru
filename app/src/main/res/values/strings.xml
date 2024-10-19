@@ -5,10 +5,18 @@
     <string name="map_fragment_label">Main Menu</string>
     <string name="chatlist_fragment_label">Chatlist</string>
     <string name="chatroom_fragment_label">Diiaphy Nakao</string>
+    <string name="quiz_activity_label">Quizzes</string>
+    <string name="news_activity_label">News</string>
+    <string name="achievements_activity_label">Achievements</string>
     <string name="next">Next</string>
     <string name="checkin">Check-In\nチェック・イン</string>
     <string name="previous">Previous</string>
     <string name="swipe">Swipe Left</string>
+    <string name="quiz">Quiz</string>
+    <string name="news">News</string>
+    <string name="map">Map</string>
+    <string name="chats">Chats</string>
+    <string name="achievements">Achievements</string>
     <string name="maps_api_key">AIzaSyA1CMTTO22FQVrQQABcS17QUn11kjWfBY8</string>
 
 

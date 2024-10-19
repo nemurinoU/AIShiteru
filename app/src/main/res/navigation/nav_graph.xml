@@ -13,6 +13,15 @@
         <action
             android:id="@+id/action_MapFragment_to_ChatlistFragment"
             app:destination="@id/ChatlistFragment" />
+        <action
+            android:id="@+id/action_MapFragment_to_achievementActivity"
+            app:destination="@id/achievementActivity" />
+        <action
+            android:id="@+id/action_MapFragment_to_newsActivity"
+            app:destination="@id/newsActivity" />
+        <action
+            android:id="@+id/action_MapFragment_to_quizActivity"
+            app:destination="@id/quizActivity" />
     </fragment>
     <fragment
         android:id="@+id/ChatlistFragment"
@@ -25,6 +34,15 @@
         <action
             android:id="@+id/action_ChatlistFragment_to_MapFragment"
             app:destination="@id/MapFragment" />
+        <action
+            android:id="@+id/action_ChatlistFragment_to_quizActivity"
+            app:destination="@id/quizActivity" />
+        <action
+            android:id="@+id/action_ChatlistFragment_to_newsActivity"
+            app:destination="@id/newsActivity" />
+        <action
+            android:id="@+id/action_ChatlistFragment_to_achievementActivity"
+            app:destination="@id/achievementActivity" />
     </fragment>
     <fragment
         android:id="@+id/ChatroomFragment"
@@ -37,5 +55,29 @@
         <action
             android:id="@+id/action_ChatroomFragment_to_ChatlistFragment"
             app:destination="@id/ChatlistFragment" />
+        <action
+            android:id="@+id/action_ChatroomFragment_to_achievementActivity"
+            app:destination="@id/achievementActivity" />
+        <action
+            android:id="@+id/action_ChatroomFragment_to_newsActivity"
+            app:destination="@id/newsActivity" />
+        <action
+            android:id="@+id/action_ChatroomFragment_to_quizActivity"
+            app:destination="@id/quizActivity" />
     </fragment>
+    <activity
+        android:id="@+id/achievementActivity"
+        android:name="com.prototype.aishiteru.activities.AchievementActivity"
+        android:label="activity_achievement"
+        tools:layout="@layout/activity_achievement" />
+    <activity
+        android:id="@+id/quizActivity"
+        android:name="com.prototype.aishiteru.activities.QuizActivity"
+        android:label="activity_quiz"
+        tools:layout="@layout/activity_quiz" />
+    <activity
+        android:id="@+id/newsActivity"
+        android:name="com.prototype.aishiteru.activities.NewsActivity"
+        android:label="activity_news"
+        tools:layout="@layout/activity_news" />
 </navigation>
