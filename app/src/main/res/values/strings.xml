@@ -2,10 +2,15 @@
     <string name="app_name">AIShiteru</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
+    <string name="map_fragment_label">Main Menu</string>
+    <string name="chatlist_fragment_label">Chatlist</string>
+    <string name="chatroom_fragment_label">Diiaphy Nakao</string>
     <string name="next">Next</string>
+    <string name="checkin">Check-In\nチェック・イン</string>
     <string name="previous">Previous</string>
+    <string name="swipe">Swipe Left</string>
+    <string name="maps_api_key">AIzaSyA1CMTTO22FQVrQQABcS17QUn11kjWfBY8</string>
+
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris

@@ -3,26 +3,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/MapFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.prototype.aishiteru.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-
+        android:id="@+id/MapFragment"
+        android:name="com.prototype.aishiteru.MapFragment"
+        android:label="@string/map_fragment_label"
+        tools:layout="@layout/fragment_map">
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_MapFragment_to_ChatlistFragment"
+            app:destination="@id/ChatlistFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.prototype.aishiteru.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
+        android:id="@+id/ChatlistFragment"
+        android:name="com.prototype.aishiteru.ChatlistFragment"
+        android:label="@string/chatlist_fragment_label"
+        tools:layout="@layout/fragment_chatlist">
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_ChatlistFragment_to_ChatroomFragment"
+            app:destination="@id/ChatroomFragment" />
+        <action
+            android:id="@+id/action_ChatlistFragment_to_MapFragment"
+            app:destination="@id/MapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ChatroomFragment"
+        android:name="com.prototype.aishiteru.ChatroomFragment"
+        android:label="@string/chatroom_fragment_label"
+        tools:layout="@layout/fragment_chatroom">
+        <action
+            android:id="@+id/action_ChatroomFragment_to_MapFragment"
+            app:destination="@id/MapFragment" />
+        <action
+            android:id="@+id/action_ChatroomFragment_to_ChatlistFragment"
+            app:destination="@id/ChatlistFragment" />
     </fragment>
 </navigation>

@@ -6,14 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.prototype.aishiteru.databinding.FragmentSecondBinding
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.prototype.aishiteru.databinding.FragmentChatroomBinding
 
 /**
- * A simple [Fragment] subclass as the second destination in the navigation.
+ * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class SecondFragment : Fragment() {
+class ChatroomFragment : Fragment() {
 
-    private var _binding: FragmentSecondBinding? = null
+    private var _binding: FragmentChatroomBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -24,7 +25,8 @@ class SecondFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentChatroomBinding.inflate(inflater, container, false)
+
         return binding.root
 
     }
@@ -32,10 +34,12 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonSecond.setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+
+        binding.fabSwipe.setOnClickListener {
+            findNavController().navigate(R.id.action_ChatroomFragment_to_MapFragment)
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
