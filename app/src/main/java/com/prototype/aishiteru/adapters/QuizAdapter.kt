@@ -1,12 +1,12 @@
 package com.prototype.aishiteru.adapters
 
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.prototype.aishiteru.R
 import com.prototype.aishiteru.classes.Quiz
 import com.prototype.aishiteru.viewholders.QuizViewHolder
+
 
 class QuizAdapter(private val data: ArrayList<Quiz>, private val itemClickListener: OnItemClickListener): Adapter<QuizViewHolder>() {
 

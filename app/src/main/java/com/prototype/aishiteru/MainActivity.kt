@@ -39,15 +39,23 @@ class MainActivity : AppCompatActivity(){//, OnMapReadyCallback {
                 .setAction("Action", null)
                 .setAnchorView(R.id.fabAchievements).show()
 
-            if (navController.currentDestination?.id == R.id.ChatroomFragment) {
-                navController.navigate(R.id.action_ChatroomFragment_to_achievementActivity)
+            binding.efabCheckin.visibility = View.VISIBLE
+            if (navController.currentDestination?.id == R.id.ChatlistFragment) {
+                navController.navigate(R.id.action_ChatlistFragment_to_AchievementFragment)
             }
-            else if (navController.currentDestination?.id == R.id.ChatlistFragment) {
-                navController.navigate(R.id.action_ChatlistFragment_to_achievementActivity)
+            else if (navController.currentDestination?.id == R.id.ChatroomFragment) {
+                navController.navigate(R.id.action_ChatroomFragment_to_AchievementFragment)
             }
             else if (navController.currentDestination?.id == R.id.MapFragment) {
-                navController.navigate(R.id.action_MapFragment_to_achievementActivity)
+                navController.navigate(R.id.action_MapFragment_to_AchievementFragment)
             }
+            else if (navController.currentDestination?.id == R.id.NewsFragment) {
+                navController.navigate(R.id.action_NewsFragment_to_AchievementFragment)
+            }
+            else if (navController.currentDestination?.id == R.id.QuizFragment) {
+                navController.navigate(R.id.action_QuizFragment_to_AchievementFragment)
+            }
+
         }
 
         binding.fabChats.setOnClickListener { view ->
@@ -61,6 +69,15 @@ class MainActivity : AppCompatActivity(){//, OnMapReadyCallback {
             }
             else if (navController.currentDestination?.id == R.id.ChatroomFragment) {
                 navController.navigate(R.id.action_ChatroomFragment_to_ChatlistFragment)
+            }
+            else if (navController.currentDestination?.id == R.id.NewsFragment) {
+                navController.navigate(R.id.action_NewsFragment_to_ChatlistFragment)
+            }
+            else if (navController.currentDestination?.id == R.id.AchievementFragment) {
+                navController.navigate(R.id.action_AchievementFragment_to_ChatlistFragment)
+            }
+            else if (navController.currentDestination?.id == R.id.QuizFragment) {
+                navController.navigate(R.id.action_QuizFragment_to_ChatlistFragment)
             }
 
         }
@@ -77,20 +94,37 @@ class MainActivity : AppCompatActivity(){//, OnMapReadyCallback {
             else if (navController.currentDestination?.id == R.id.ChatlistFragment) {
                 navController.navigate(R.id.action_ChatlistFragment_to_MapFragment)
             }
+            else if (navController.currentDestination?.id == R.id.NewsFragment) {
+                navController.navigate(R.id.action_NewsFragment_to_MapFragment)
+            }
+            else if (navController.currentDestination?.id == R.id.AchievementFragment) {
+                navController.navigate(R.id.action_AchievementFragment_to_MapFragment)
+            }
+            else if (navController.currentDestination?.id == R.id.QuizFragment) {
+                navController.navigate(R.id.action_QuizFragment_to_MapFragment)
+            }
         }
 
         binding.fabNews.setOnClickListener { view ->
             Snackbar.make(view, "NEWS", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
                 .setAnchorView(R.id.fabNews).show()
-            if (navController.currentDestination?.id == R.id.ChatroomFragment) {
-                navController.navigate(R.id.action_ChatroomFragment_to_newsActivity)
+
+            binding.efabCheckin.visibility = View.VISIBLE
+            if (navController.currentDestination?.id == R.id.ChatlistFragment) {
+                navController.navigate(R.id.action_ChatlistFragment_to_NewsFragment)
             }
-            else if (navController.currentDestination?.id == R.id.ChatlistFragment) {
-                navController.navigate(R.id.action_ChatlistFragment_to_newsActivity)
+            else if (navController.currentDestination?.id == R.id.ChatroomFragment) {
+                navController.navigate(R.id.action_ChatroomFragment_to_NewsFragment)
             }
             else if (navController.currentDestination?.id == R.id.MapFragment) {
-                navController.navigate(R.id.action_MapFragment_to_newsActivity)
+                navController.navigate(R.id.action_MapFragment_to_NewsFragment)
+            }
+            else if (navController.currentDestination?.id == R.id.AchievementFragment) {
+                navController.navigate(R.id.action_AchievementFragment_to_NewsFragment)
+            }
+            else if (navController.currentDestination?.id == R.id.QuizFragment) {
+                navController.navigate(R.id.action_QuizFragment_to_NewsFragment)
             }
 
         }
@@ -100,15 +134,23 @@ class MainActivity : AppCompatActivity(){//, OnMapReadyCallback {
                 .setAction("Action", null)
                 .setAnchorView(R.id.fabQuiz).show()
 
-            if (navController.currentDestination?.id == R.id.ChatroomFragment) {
-                navController.navigate(R.id.action_ChatroomFragment_to_quizActivity)
+            binding.efabCheckin.visibility = View.VISIBLE
+            if (navController.currentDestination?.id == R.id.ChatlistFragment) {
+                navController.navigate(R.id.action_ChatlistFragment_to_QuizFragment)
             }
-            else if (navController.currentDestination?.id == R.id.ChatlistFragment) {
-                navController.navigate(R.id.action_ChatlistFragment_to_quizActivity)
+            else if (navController.currentDestination?.id == R.id.ChatroomFragment) {
+                navController.navigate(R.id.action_ChatroomFragment_to_QuizFragment)
             }
             else if (navController.currentDestination?.id == R.id.MapFragment) {
-                navController.navigate(R.id.action_MapFragment_to_quizActivity)
+                navController.navigate(R.id.action_MapFragment_to_QuizFragment)
             }
+            else if (navController.currentDestination?.id == R.id.AchievementFragment) {
+                navController.navigate(R.id.action_AchievementFragment_to_QuizFragment)
+            }
+            else if (navController.currentDestination?.id == R.id.NewsFragment) {
+                navController.navigate(R.id.action_NewsFragment_to_QuizFragment)
+            }
+
         }
 
         binding.efabCheckin.setOnClickListener { view ->
