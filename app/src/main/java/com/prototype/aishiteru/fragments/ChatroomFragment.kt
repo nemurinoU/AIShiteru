@@ -1,4 +1,4 @@
-package com.prototype.aishiteru
+package com.prototype.aishiteru.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,14 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.prototype.aishiteru.databinding.FragmentChatlistBinding
+import com.prototype.aishiteru.R
+import com.prototype.aishiteru.databinding.FragmentChatroomBinding
 
 /**
- * A simple [Fragment] subclass as the second destination in the navigation.
+ * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class ChatlistFragment : Fragment() {
+class ChatroomFragment : Fragment() {
 
-    private var _binding: FragmentChatlistBinding? = null
+    private var _binding: FragmentChatroomBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -24,7 +25,8 @@ class ChatlistFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentChatlistBinding.inflate(inflater, container, false)
+        _binding = FragmentChatroomBinding.inflate(inflater, container, false)
+
         return binding.root
 
     }
@@ -32,14 +34,12 @@ class ChatlistFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.fabSwipe.setOnClickListener {
-            findNavController().navigate(R.id.action_ChatlistFragment_to_ChatroomFragment)
-        }
 
-        binding.testChatClickable.setOnClickListener {
-            findNavController().navigate(R.id.action_ChatlistFragment_to_ChatroomFragment)
+        binding.fabSwipe.setOnClickListener {
+            findNavController().navigate(R.id.action_ChatroomFragment_to_MapFragment)
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

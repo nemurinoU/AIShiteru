@@ -17,13 +17,13 @@
         android:theme="@style/Theme.AIShiteru"
         tools:targetApi="31">
         <activity
-            android:name=".activities.AchievementActivity"
+            android:name=".fragments.AchievementFragment"
             android:exported="false" />
         <activity
-            android:name=".activities.QuizActivity"
+            android:name=".fragments.QuizFragment"
             android:exported="false" />
         <activity
-            android:name=".activities.NewsActivity"
+            android:name=".fragments.NewsFragment"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

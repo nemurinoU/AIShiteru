@@ -1,4 +1,4 @@
-package com.prototype.aishiteru
+package com.prototype.aishiteru.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -19,8 +19,8 @@ import android.content.pm.PackageManager
 import android.widget.Toast
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.prototype.aishiteru.R
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
