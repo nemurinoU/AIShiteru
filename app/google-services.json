@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "744777462760",
+    "project_id": "aishiteru-9b99d",
+    "storage_bucket": "aishiteru-9b99d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744777462760:android:629ceb97d74e7ca82b2a5d",
+        "android_client_info": {
+          "package_name": "com.prototype.aishiteru"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIcOEIIAZqePLxUqkwbvvAdZff_D-lOIg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

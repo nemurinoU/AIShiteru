@@ -29,9 +29,6 @@
         android:label="@string/chatlist_fragment_label"
         tools:layout="@layout/fragment_chatlist">
         <action
-            android:id="@+id/action_ChatlistFragment_to_ChatroomFragment"
-            app:destination="@id/ChatroomFragment" />
-        <action
             android:id="@+id/action_ChatlistFragment_to_MapFragment"
             app:destination="@id/MapFragment" />
         <action
@@ -43,6 +40,9 @@
         <action
             android:id="@+id/action_ChatlistFragment_to_QuizFragment"
             app:destination="@id/QuizFragment" />
+        <action
+            android:id="@+id/action_ChatlistFragment_to_ChatroomFragment"
+            app:destination="@id/ChatroomFragment" />
     </fragment>
     <fragment
         android:id="@+id/ChatroomFragment"
