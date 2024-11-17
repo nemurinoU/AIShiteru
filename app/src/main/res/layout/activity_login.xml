@@ -10,6 +10,23 @@
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
+    <ImageView
+        android:id="@+id/icLogo"
+        android:layout_width="match_parent"
+        android:layout_height="308dp"
+        app:srcCompat="@drawable/ai" />
+
+    <TextView
+        android:id="@+id/lblSignin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="AIShiteru: Your Love Story Starts Here"
+        android:textAlignment="center"
+        android:textColor="@color/almond"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/loginEmail"
         android:layout_width="350dp"
@@ -19,6 +36,7 @@
         android:hint="Email"
         android:textColorHint="@color/text_hint"
         android:backgroundTint="@color/pale_dogwood"
+        android:textColor="@color/almond"
         />
 
     <EditText
@@ -30,11 +48,12 @@
         android:hint="@string/password"
         android:textColorHint="@color/text_hint"
         android:backgroundTint="@color/pale_dogwood"
+        android:textColor="@color/almond"
         />
 
     <Button
         android:id="@+id/btnNext"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/login"
         android:textSize="15sp"

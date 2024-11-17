@@ -39,11 +39,6 @@ class AchievementFragment : Fragment() {
             }
         })
         binding.achRecycler.layoutManager = GridLayoutManager(requireContext(), 4)
-
-        binding.fabSwipe.setOnClickListener {
-            findNavController().navigate(R.id.action_AchievementFragment_to_QuizFragment)
-        }
-
     }
 
 }

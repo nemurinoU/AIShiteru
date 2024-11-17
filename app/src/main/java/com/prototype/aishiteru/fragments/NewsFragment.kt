@@ -40,10 +40,6 @@ class NewsFragment : Fragment() {
         })
         binding.newsRecycler.layoutManager = LinearLayoutManager(requireContext())
 
-        binding.fabSwipe.setOnClickListener {
-            findNavController().navigate(R.id.action_NewsFragment_to_MapFragment)
-        }
-
     }
 
     override fun onDestroyView() {

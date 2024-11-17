@@ -40,8 +40,9 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true"
-            android:theme="@style/Theme.AIShiteru"></activity>
+            android:theme="@style/Theme.AIShiteru" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

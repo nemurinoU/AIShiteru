@@ -33,10 +33,6 @@ class ChatlistFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.fabSwipe.setOnClickListener {
-            findNavController().navigate(R.id.action_ChatlistFragment_to_ChatroomFragment)
-        }
-
         binding.testChatClickable.setOnClickListener {
             findNavController().navigate(R.id.action_ChatlistFragment_to_ChatroomFragment)
         }

@@ -51,11 +51,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        binding.fabSwipe.setOnClickListener {
-            findNavController().navigate(R.id.action_MapFragment_to_ChatlistFragment)
-        }
-
         // Initialize FusedLocationProviderClient
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 

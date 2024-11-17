@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.navigation.fragment.findNavController
 import com.prototype.aishiteru.R
 import com.prototype.aishiteru.databinding.FragmentChatroomBinding
@@ -27,17 +28,14 @@ class ChatroomFragment : Fragment() {
 
         _binding = FragmentChatroomBinding.inflate(inflater, container, false)
 
+        getActivity()?.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+
         return binding.root
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        binding.fabSwipe.setOnClickListener {
-            findNavController().navigate(R.id.action_ChatroomFragment_to_MapFragment)
-        }
     }
 
 
