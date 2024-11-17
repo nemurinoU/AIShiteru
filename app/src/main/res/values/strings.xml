@@ -26,7 +26,7 @@
     <string name="login">Log In</string>
     <string name="wrong_login">Incorrect user or password!</string>
     <string name="wrong_retype">Password re-type does not match!</string>
-
+    <string name="splash_title">AIshiteru: You can (not) redo</string>
 
 
     <string name="lorem_ipsum">

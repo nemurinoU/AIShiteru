@@ -15,6 +15,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.prototype.aishiteru.databinding.ActivityLoginBinding
 import com.prototype.aishiteru.databinding.ActivitySignupBinding
+import io.github.muddz.styleabletoast.StyleableToast
 
 class SignupActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
@@ -61,27 +62,30 @@ class SignupActivity : AppCompatActivity() {
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                                Toast.makeText(
+                                StyleableToast.makeText(
                                     baseContext,
                                     "Authentication failed.",
                                     Toast.LENGTH_SHORT,
+                                    R.style.warningToast
                                 ).show()
                             }
                         }
                 } else {
                     // if not, throw error
-                    Toast.makeText(
+                    StyleableToast.makeText(
                         baseContext,
-                        R.string.wrong_retype,
+                        getString(R.string.wrong_retype),
                         Toast.LENGTH_SHORT,
+                        R.style.warningToast
                     ).show()
                 }
             }
             catch (e: IllegalArgumentException) {
-                Toast.makeText(
+                StyleableToast.makeText(
                     baseContext,
-                    "@string/empty_logreg",
+                    getString(R.string.empty_logreg),
                     Toast.LENGTH_SHORT,
+                    R.style.cautionToast
                 ).show()
             }
             catch (e: Exception) {

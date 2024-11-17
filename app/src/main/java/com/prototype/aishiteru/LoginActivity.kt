@@ -2,12 +2,14 @@ package com.prototype.aishiteru
 
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -81,10 +83,11 @@ class LoginActivity : AppCompatActivity() {
                     }
             }
             catch (e: IllegalArgumentException) {
-                Toast.makeText(
+                StyleableToast.makeText(
                     baseContext,
-                    R.string.empty_logreg,
+                    getString(R.string.empty_logreg),
                     Toast.LENGTH_SHORT,
+                    R.style.cautionToast
                 ).show()
             }
             catch (e: Exception) {
@@ -99,7 +102,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.toGoogle.setOnClickListener{
-            Toast.makeText(this,"Logging In", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this,"Logging In", Toast.LENGTH_SHORT).show()
             signInWithGoogle()
         }
 
@@ -152,13 +155,13 @@ class LoginActivity : AppCompatActivity() {
                 updateUI(account)
             }
         } catch (e: ApiException){
-            Toast.makeText(this,e.toString(), Toast.LENGTH_SHORT).show()
-            StyleableToast.makeText(
+            //Toast.makeText(this,e.toString(), Toast.LENGTH_SHORT).show()
+            val toast = StyleableToast.makeText(
                 baseContext,
                 "Sign-in failed!",
                 Toast.LENGTH_SHORT,
                 R.style.warningToast
-            ).show()
+            )
         }
     }
 

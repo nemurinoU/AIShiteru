@@ -35,7 +35,7 @@ class AchievementFragment : Fragment() {
         // Set up the RecyclerView
         binding.achRecycler.adapter = AchievementAdapter(achievementList, object : AchievementAdapter.OnItemClickListener {
             override fun onItemClick(achievement: Achievement) {
-                Toast.makeText(requireContext(), achievement.description, Toast.LENGTH_SHORT).show()
+                //Toast.makeText(requireContext(), achievement.description, Toast.LENGTH_SHORT).show()
             }
         })
         binding.achRecycler.layoutManager = GridLayoutManager(requireContext(), 4)

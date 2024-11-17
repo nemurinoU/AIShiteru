@@ -82,8 +82,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             if (location != null) {
                 currentLocation = location
 
+                /*
                 Toast.makeText(requireContext(), currentLocation.latitude.toString() + ", " +
-                        currentLocation.longitude.toString(), Toast.LENGTH_LONG).show()
+                        currentLocation.longitude.toString(), Toast.LENGTH_LONG).show()*/
 
                 val exploreFragment = childFragmentManager
                     .findFragmentById(R.id.exploreMap) as SupportMapFragment
