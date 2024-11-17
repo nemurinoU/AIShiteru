@@ -17,7 +17,16 @@
     <string name="map">Map</string>
     <string name="chats">Chats</string>
     <string name="achievements">Achievements</string>
-    <string name="maps_api_key">AIzaSyA1CMTTO22FQVrQQABcS17QUn11kjWfBY8</string>
+    <string name="google_default_api_key">AIzaSyCFPZPeLzC2n6u8TnZGh1SLJQ8N2VQBPRQ</string>
+    <string name="default_web_client_id">588411918081-7vv2jpl8e70vcahohv6fhjtbak3i2aug.apps.googleusercontent.com</string>
+    <string name="password">Password</string>
+    <string name="first_time">First Time? Create account here.</string>
+    <string name="retype_password">Re-type Password</string>
+    <string name="empty_logreg">User or Password must not be empty!</string>
+    <string name="login">Log In</string>
+    <string name="wrong_login">Incorrect user or password!</string>
+    <string name="wrong_retype">Password re-type does not match!</string>
+
 
 
     <string name="lorem_ipsum">

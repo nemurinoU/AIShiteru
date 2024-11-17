@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@color/outer_space"
+    android:orientation="vertical"
+    tools:context=".SignupActivity">
+
+    <EditText
+        android:id="@+id/registerEmail"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="emailAddress"
+        android:inputType="textEmailAddress"
+        android:hint="Email"
+        android:textColorHint="@color/text_hint"
+        android:backgroundTint="@color/pale_dogwood"
+        />
+
+    <EditText
+        android:id="@+id/registerPassword"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="password"
+        android:inputType="textPassword"
+        android:hint="@string/password"
+        android:textColorHint="@color/text_hint"
+        android:backgroundTint="@color/pale_dogwood"
+        />
+
+    <EditText
+        android:id="@+id/repeatPassword"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="password"
+        android:inputType="textPassword"
+        android:hint="@string/retype_password"
+        android:textColorHint="@color/text_hint"
+        android:backgroundTint="@color/pale_dogwood"
+        />
+
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/next"
+        android:textSize="15sp"
+        android:layout_margin="20dp"
+        android:backgroundTint="@color/pale_dogwood"
+        />
+
+</LinearLayout>
