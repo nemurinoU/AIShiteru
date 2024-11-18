@@ -15,6 +15,20 @@ class CustomDate {
         month = c[Calendar.MONTH]
     }
 
+    // Getters
+    fun getYear(): Int {
+        return year
+    }
+
+    fun getMonth(): Int {
+        return month
+    }
+
+    fun getDay(): Int {
+        return day_in_month
+    }
+
+
     // When supplied the day, month, and year, create the date accordingly.
     // Month here is expected to be 0-11
     constructor(year: Int, month: Int, day_in_month: Int) {
@@ -57,4 +71,6 @@ class CustomDate {
             "Dec"
         )
     }
+
+
 }

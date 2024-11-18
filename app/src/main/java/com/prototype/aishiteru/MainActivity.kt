@@ -95,7 +95,9 @@ class MainActivity : AppCompatActivity(){//, OnMapReadyCallback {
                 navController.navigate(R.id.action_ChatlistFragment_to_MapFragment)
             }
             else if (navController.currentDestination?.id == R.id.NewsFragment) {
+
                 navController.navigate(R.id.action_NewsFragment_to_MapFragment)
+
             }
             else if (navController.currentDestination?.id == R.id.AchievementFragment) {
                 navController.navigate(R.id.action_AchievementFragment_to_MapFragment)
