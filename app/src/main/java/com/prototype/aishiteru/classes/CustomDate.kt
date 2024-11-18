@@ -6,6 +6,8 @@ class CustomDate {
     private var day_in_month: Int
     private var month: Int
     private var year: Int
+    private var hour: Int
+    private var min: Int
 
     // Creates a CustomDate for today
     constructor() {
@@ -13,6 +15,8 @@ class CustomDate {
         year = c[Calendar.YEAR]
         day_in_month = c[Calendar.DAY_OF_MONTH]
         month = c[Calendar.MONTH]
+        hour = c[Calendar.HOUR_OF_DAY]
+        min = c[Calendar.MINUTE]
     }
 
     // Getters
@@ -30,11 +34,14 @@ class CustomDate {
 
 
     // When supplied the day, month, and year, create the date accordingly.
+
     // Month here is expected to be 0-11
-    constructor(year: Int, month: Int, day_in_month: Int) {
+    constructor(year: Int, month: Int, day_in_month: Int, hour: Int = 0, min: Int = 0) {
         this.year = year
         this.day_in_month = day_in_month
         this.month = month
+        this.hour = hour
+        this.min = min
     }
 
     // Example output
@@ -44,7 +51,10 @@ class CustomDate {
         return monthString[month] + " " + day_in_month + ", " + year
     }
 
-    fun toStringISO(): String {
+    fun toStringISO(detailed: Boolean = false): String {
+        if (detailed)
+            return year.toString() + "/" + month.toString() + "/" + day_in_month.toString() + " " + hour.toString() + ":" + min.toString()
+
         return year.toString() + "/" + month.toString() + "/" + day_in_month.toString()
     }
 

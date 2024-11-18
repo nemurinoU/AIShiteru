@@ -35,124 +35,103 @@ class MainActivity : AppCompatActivity(){//, OnMapReadyCallback {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         binding.fabAchievements.setOnClickListener { view ->
-            Snackbar.make(view, "ACHIEVEMENTS", Snackbar.LENGTH_LONG)
+            /*Snackbar.make(view, "ACHIEVEMENTS", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
-                .setAnchorView(R.id.fabAchievements).show()
+                .setAnchorView(R.id.fabAchievements).show()*/
 
             binding.efabCheckin.visibility = View.VISIBLE
-            if (navController.currentDestination?.id == R.id.ChatlistFragment) {
-                navController.navigate(R.id.action_ChatlistFragment_to_AchievementFragment)
+            val currentDestinationId = navController.currentDestination?.id
+            val actionId = when (currentDestinationId) {
+                R.id.ChatlistFragment -> R.id.action_ChatlistFragment_to_AchievementFragment
+                R.id.ChatroomFragment -> R.id.action_ChatroomFragment_to_AchievementFragment
+                R.id.MapFragment -> R.id.action_MapFragment_to_AchievementFragment
+                R.id.NewsFragment -> R.id.action_NewsFragment_to_AchievementFragment
+                R.id.QuizFragment -> R.id.action_QuizFragment_to_AchievementFragment
+                else -> null
             }
-            else if (navController.currentDestination?.id == R.id.ChatroomFragment) {
-                navController.navigate(R.id.action_ChatroomFragment_to_AchievementFragment)
-            }
-            else if (navController.currentDestination?.id == R.id.MapFragment) {
-                navController.navigate(R.id.action_MapFragment_to_AchievementFragment)
-            }
-            else if (navController.currentDestination?.id == R.id.NewsFragment) {
-                navController.navigate(R.id.action_NewsFragment_to_AchievementFragment)
-            }
-            else if (navController.currentDestination?.id == R.id.QuizFragment) {
-                navController.navigate(R.id.action_QuizFragment_to_AchievementFragment)
-            }
+            actionId?.let { navController.navigate(it) }
 
         }
 
         binding.fabChats.setOnClickListener { view ->
-            Snackbar.make(view, "CHATS", Snackbar.LENGTH_LONG)
+            /*Snackbar.make(view, "CHATS", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
-                .setAnchorView(R.id.fabChats).show()
+                .setAnchorView(R.id.fabChats).show()*/
 
             binding.efabCheckin.visibility = View.VISIBLE
-            if (navController.currentDestination?.id == R.id.MapFragment) {
-                navController.navigate(R.id.action_MapFragment_to_ChatlistFragment)
+
+            val currentDestinationId = navController.currentDestination?.id
+            val actionId = when (currentDestinationId) {
+                R.id.ChatroomFragment -> R.id.action_ChatroomFragment_to_ChatlistFragment
+                R.id.MapFragment -> R.id.action_MapFragment_to_ChatlistFragment
+                R.id.AchievementFragment -> R.id.action_AchievementFragment_to_ChatlistFragment
+                R.id.NewsFragment -> R.id.action_NewsFragment_to_ChatlistFragment
+                R.id.QuizFragment -> R.id.action_QuizFragment_to_ChatlistFragment
+                else -> null
             }
-            else if (navController.currentDestination?.id == R.id.ChatroomFragment) {
-                navController.navigate(R.id.action_ChatroomFragment_to_ChatlistFragment)
-            }
-            else if (navController.currentDestination?.id == R.id.NewsFragment) {
-                navController.navigate(R.id.action_NewsFragment_to_ChatlistFragment)
-            }
-            else if (navController.currentDestination?.id == R.id.AchievementFragment) {
-                navController.navigate(R.id.action_AchievementFragment_to_ChatlistFragment)
-            }
-            else if (navController.currentDestination?.id == R.id.QuizFragment) {
-                navController.navigate(R.id.action_QuizFragment_to_ChatlistFragment)
-            }
+            actionId?.let { navController.navigate(it) }
 
         }
 
         binding.fabMaps.setOnClickListener { view ->
-            Snackbar.make(view, "MAPS", Snackbar.LENGTH_LONG)
+            /*Snackbar.make(view, "MAPS", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
-                .setAnchorView(R.id.fabMaps).show()
+                .setAnchorView(R.id.fabMaps).show()*/
 
             binding.efabCheckin.visibility = View.VISIBLE
-            if (navController.currentDestination?.id == R.id.ChatroomFragment) {
-                navController.navigate(R.id.action_ChatroomFragment_to_MapFragment)
-            }
-            else if (navController.currentDestination?.id == R.id.ChatlistFragment) {
-                navController.navigate(R.id.action_ChatlistFragment_to_MapFragment)
-            }
-            else if (navController.currentDestination?.id == R.id.NewsFragment) {
 
-                navController.navigate(R.id.action_NewsFragment_to_MapFragment)
+            val currentDestinationId = navController.currentDestination?.id
+            val actionId = when (currentDestinationId) {
+                R.id.ChatlistFragment -> R.id.action_ChatlistFragment_to_MapFragment
+                R.id.ChatroomFragment -> R.id.action_ChatroomFragment_to_MapFragment
+                R.id.AchievementFragment -> R.id.action_AchievementFragment_to_MapFragment
+                R.id.NewsFragment -> R.id.action_NewsFragment_to_MapFragment
+                R.id.QuizFragment -> R.id.action_QuizFragment_to_MapFragment
+                else -> null
+            }
 
-            }
-            else if (navController.currentDestination?.id == R.id.AchievementFragment) {
-                navController.navigate(R.id.action_AchievementFragment_to_MapFragment)
-            }
-            else if (navController.currentDestination?.id == R.id.QuizFragment) {
-                navController.navigate(R.id.action_QuizFragment_to_MapFragment)
-            }
+            actionId?.let { navController.navigate(it) }
         }
 
         binding.fabNews.setOnClickListener { view ->
-            Snackbar.make(view, "NEWS", Snackbar.LENGTH_LONG)
+            /*Snackbar.make(view, "NEWS", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
-                .setAnchorView(R.id.fabNews).show()
+                .setAnchorView(R.id.fabNews).show()*/
 
             binding.efabCheckin.visibility = View.VISIBLE
-            if (navController.currentDestination?.id == R.id.ChatlistFragment) {
-                navController.navigate(R.id.action_ChatlistFragment_to_NewsFragment)
+
+            val currentDestinationId = navController.currentDestination?.id
+            val actionId = when (currentDestinationId) {
+                R.id.ChatlistFragment -> R.id.action_ChatlistFragment_to_NewsFragment
+                R.id.ChatroomFragment -> R.id.action_ChatroomFragment_to_NewsFragment
+                R.id.MapFragment -> R.id.action_MapFragment_to_NewsFragment
+                R.id.AchievementFragment -> R.id.action_AchievementFragment_to_NewsFragment
+                R.id.QuizFragment -> R.id.action_QuizFragment_to_NewsFragment
+                else -> null
             }
-            else if (navController.currentDestination?.id == R.id.ChatroomFragment) {
-                navController.navigate(R.id.action_ChatroomFragment_to_NewsFragment)
-            }
-            else if (navController.currentDestination?.id == R.id.MapFragment) {
-                navController.navigate(R.id.action_MapFragment_to_NewsFragment)
-            }
-            else if (navController.currentDestination?.id == R.id.AchievementFragment) {
-                navController.navigate(R.id.action_AchievementFragment_to_NewsFragment)
-            }
-            else if (navController.currentDestination?.id == R.id.QuizFragment) {
-                navController.navigate(R.id.action_QuizFragment_to_NewsFragment)
-            }
+
+            actionId?.let { navController.navigate(it) }
 
         }
 
         binding.fabQuiz.setOnClickListener { view ->
-            Snackbar.make(view, "QUIZ", Snackbar.LENGTH_LONG)
+            /*Snackbar.make(view, "QUIZ", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
-                .setAnchorView(R.id.fabQuiz).show()
+                .setAnchorView(R.id.fabQuiz).show()*/
 
             binding.efabCheckin.visibility = View.VISIBLE
-            if (navController.currentDestination?.id == R.id.ChatlistFragment) {
-                navController.navigate(R.id.action_ChatlistFragment_to_QuizFragment)
-            }
-            else if (navController.currentDestination?.id == R.id.ChatroomFragment) {
-                navController.navigate(R.id.action_ChatroomFragment_to_QuizFragment)
-            }
-            else if (navController.currentDestination?.id == R.id.MapFragment) {
-                navController.navigate(R.id.action_MapFragment_to_QuizFragment)
-            }
-            else if (navController.currentDestination?.id == R.id.AchievementFragment) {
-                navController.navigate(R.id.action_AchievementFragment_to_QuizFragment)
-            }
-            else if (navController.currentDestination?.id == R.id.NewsFragment) {
-                navController.navigate(R.id.action_NewsFragment_to_QuizFragment)
+
+            val currentDestinationId = navController.currentDestination?.id
+            val actionId = when (currentDestinationId) {
+                R.id.ChatlistFragment -> R.id.action_ChatlistFragment_to_QuizFragment
+                R.id.ChatroomFragment -> R.id.action_ChatroomFragment_to_QuizFragment
+                R.id.MapFragment -> R.id.action_MapFragment_to_QuizFragment
+                R.id.AchievementFragment -> R.id.action_AchievementFragment_to_QuizFragment
+                R.id.NewsFragment -> R.id.action_NewsFragment_to_QuizFragment
+                else -> null
             }
 
+            actionId?.let { navController.navigate(it) }
         }
 
         binding.efabCheckin.setOnClickListener { view ->

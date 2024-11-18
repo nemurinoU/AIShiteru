@@ -33,7 +33,7 @@
         android:translationX="-52.5dp"
         app:layout_anchor="@+id/fabNews"
         app:layout_anchorGravity="start|center"
-        app:srcCompat="@drawable/idea_icon" />
+        app:srcCompat="@drawable/ic_idea" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabNews"
@@ -43,7 +43,7 @@
         android:translationX="-52.5dp"
         app:layout_anchor="@+id/fabMaps"
         app:layout_anchorGravity="start|center"
-        app:srcCompat="@drawable/newspaper_icon" />
+        app:srcCompat="@drawable/ic_newspaper" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabMaps"
@@ -53,7 +53,7 @@
         android:translationX="-52.5dp"
         app:layout_anchor="@+id/fabChats"
         app:layout_anchorGravity="start|center"
-        app:srcCompat="@drawable/location_icon" />
+        app:srcCompat="@drawable/ic_location" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabChats"
@@ -63,7 +63,7 @@
         android:translationX="-52.5dp"
         app:layout_anchor="@+id/fabAchievements"
         app:layout_anchorGravity="start|center"
-        app:srcCompat="@drawable/chat_icon" />
+        app:srcCompat="@drawable/ic_chat" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAchievements"

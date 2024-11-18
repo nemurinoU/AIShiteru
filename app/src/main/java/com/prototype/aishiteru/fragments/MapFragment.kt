@@ -51,11 +51,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        binding.fabSwipe.setOnClickListener {
-            findNavController().navigate(R.id.action_MapFragment_to_ChatlistFragment)
-        }
-
         // Initialize FusedLocationProviderClient
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
@@ -87,8 +82,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             if (location != null) {
                 currentLocation = location
 
+                /*
                 Toast.makeText(requireContext(), currentLocation.latitude.toString() + ", " +
-                        currentLocation.longitude.toString(), Toast.LENGTH_LONG).show()
+                        currentLocation.longitude.toString(), Toast.LENGTH_LONG).show()*/
 
                 val exploreFragment = childFragmentManager
                     .findFragmentById(R.id.exploreMap) as SupportMapFragment
