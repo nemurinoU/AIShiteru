@@ -26,43 +26,34 @@ class MessagesViewHolder(itemView:View):ViewHolder(itemView) {
     fun bindMessageData(data: MessageItem) {
         //viewHolder.textView_message_text.text = data.text
 
-        time.setText("2024/11/18 08:00 AM") // time stamp
-        body.setText("Lorem ipsum!")
-        if (true) {
+
+        // later make it so that the condition changes with the chatroom opened
+        if (data.sender.userId.startsWith("0x") && data.sender.name.equals("Diiaphy Nakao")) {
+            time.setText(data.time.toStringISO(true)) // time stamp
+            body.setText(data.text)
+
             // if the message is from a bot
             // let's dissect this
             av.setImageResource(data.avatar)   // bot profile photo
-            time.setText("2024/11/18 08:00 AM") // time stamp
 
             // the funny part
             // we gotta set the properties of the chatter box
             // then we gotta set the color and the shape(?)
-            body.setText("Lorem ipsum!")
             body.setBackgroundResource(R.drawable.rect_corner_oval_dark)
             row.setHorizontalGravity(Gravity.LEFT)
         }
-        else {
+        else if (data.sender.userId.equals("-1") && data.recipient.name.equals("Diiaphy Nakao")){
+            time.setText(data.time.toStringISO(true)) // time stamp
+            body.setText(data.text)
             // if the message is from the user
             //av.setImageResource(data.imageId) // no profile photo needed
-
+            av.visibility = View.GONE
             body.setBackgroundResource(R.drawable.rect_corner_oval_user) // set it to blue chatbox
             row.setHorizontalGravity(Gravity.RIGHT) // move to the right
+            time.textAlignment = View.TEXT_ALIGNMENT_TEXT_END
+        }
+        else {
+            row.visibility = View.GONE
         }
     }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

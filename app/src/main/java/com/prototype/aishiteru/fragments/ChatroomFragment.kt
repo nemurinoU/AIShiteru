@@ -8,7 +8,12 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.prototype.aishiteru.DataGenerator
 import com.prototype.aishiteru.R
+import com.prototype.aishiteru.adapters.MessageAdapter
+import com.prototype.aishiteru.classes.MessageItem
 import com.prototype.aishiteru.databinding.FragmentChatroomBinding
 import io.github.muddz.styleabletoast.StyleableToast
 
@@ -18,6 +23,9 @@ import io.github.muddz.styleabletoast.StyleableToast
 class ChatroomFragment : Fragment() {
 
     private var _binding: FragmentChatroomBinding? = null
+    private lateinit var recyclerView: RecyclerView
+
+    private val messages : ArrayList<MessageItem> = DataGenerator.generateMessages()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -43,6 +51,14 @@ class ChatroomFragment : Fragment() {
         /*
         TO DO: You better send the message and make it save to the database :)
          */
+        //recycler view
+        recyclerView = binding.recyclerViewMessages
+
+        // set the adapter
+        this.recyclerView.adapter = MessageAdapter(this.messages)
+
+        this.recyclerView.layoutManager =  LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
         binding.imgSend.setOnClickListener {
             StyleableToast.makeText(
                 requireContext(),

@@ -4,7 +4,7 @@
     <!-- Strings used for fragments for navigation -->
     <string name="map_fragment_label">Main Menu</string>
     <string name="chatlist_fragment_label">Chatlist</string>
-    <string name="chatroom_fragment_label">Diiaphy Nakao</string>
+    <string name="chatroom_fragment_label">BOT</string>
     <string name="quiz_activity_label">Quizzes</string>
     <string name="news_activity_label">News</string>
     <string name="achievements_activity_label">Achievements</string>

@@ -1,125 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <TableLayout
+    <TableRow
+        android:id="@+id/tblAlign"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="15dp">
 
-        <TableRow
-            android:id="@+id/tblAlign"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avChatter"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginHorizontal="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/avatar_diia"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="15dp">
+            android:orientation="vertical">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/avChatter"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginHorizontal="10dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/avatar_diia"
-                app:civ_border_color="#FF000000"
-                app:civ_border_width="2dp" />
+            <TextView
+                android:id="@+id/msgTimestamp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2024/11/18 08:00"
+                android:textSize="12sp" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/msgBody"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/msgTimestamp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="2024/11/18 08:00"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/msgBody"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rect_corner_oval_dark"
-                    android:backgroundTintMode="add"
-                    android:maxWidth="275dp"
-                    android:padding="20dp"
-                    android:text="こんにちは！"
-                    android:textColor="@color/white" />
-
-            </LinearLayout>
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="right"
-            android:padding="20dp"
-            android:visibility="gone">
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="wrap_content"
-                android:layout_height="78dp"
-                android:background="@drawable/rect_corner_oval_user"
-                android:backgroundTintMode="add"
-                android:padding="20dp"
-                android:text="質問聞いてもいいですか？"
-                android:textColor="@color/white" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="20dp"
-            android:visibility="gone">
-
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginHorizontal="10dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/avatar_diia"
-                app:civ_border_color="#FF000000"
-                app:civ_border_width="2dp" />
-
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="129dp"
-                android:layout_height="78dp"
                 android:background="@drawable/rect_corner_oval_dark"
                 android:backgroundTintMode="add"
+                android:maxWidth="275dp"
                 android:padding="20dp"
-                android:text="嫌だな・・・"
+                android:text="こんにちは！"
                 android:textColor="@color/white" />
-        </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="right"
+        </LinearLayout>
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right"
+        android:padding="20dp"
+        android:visibility="gone">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="78dp"
+            android:background="@drawable/rect_corner_oval_user"
+            android:backgroundTintMode="add"
             android:padding="20dp"
-            android:visibility="gone">
+            android:text="質問聞いてもいいですか？"
+            android:textColor="@color/white" />
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+    </TableRow>
 
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="wrap_content"
-                android:layout_height="78dp"
-                android:background="@drawable/rect_corner_oval_user"
-                android:backgroundTintMode="add"
-                android:padding="20dp"
-                android:text="泣く泣く・・・( ﾉД`)ｼｸｼｸ…"
-                android:textColor="@color/white" />
-        </TableRow>
-    </TableLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:visibility="gone">
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginHorizontal="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/avatar_diia"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="129dp"
+            android:layout_height="78dp"
+            android:background="@drawable/rect_corner_oval_dark"
+            android:backgroundTintMode="add"
+            android:padding="20dp"
+            android:text="嫌だな・・・"
+            android:textColor="@color/white" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right"
+        android:padding="20dp"
+        android:visibility="gone">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="78dp"
+            android:background="@drawable/rect_corner_oval_user"
+            android:backgroundTintMode="add"
+            android:padding="20dp"
+            android:text="泣く泣く・・・( ﾉД`)ｼｸｼｸ…"
+            android:textColor="@color/white" />
+    </TableRow>
+
+</TableLayout>
