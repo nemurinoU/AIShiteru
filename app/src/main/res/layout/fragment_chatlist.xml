@@ -27,13 +27,15 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/avaDiia"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_marginHorizontal="20dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/avatar_diia" />
+                        android:src="@drawable/avatar_diia"
+                        app:civ_border_color="#FF000000"
+                        app:civ_border_width="2dp" />
 
                     <TextView
                         android:id="@+id/textView2"
@@ -51,13 +53,15 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/avaDoko"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_marginHorizontal="20dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/avatar_doko" />
+                        android:src="@drawable/avatar_doko"
+                        app:civ_border_color="#FF000000"
+                        app:civ_border_width="2dp" />
 
                     <TextView
                         android:id="@+id/textView3"
@@ -81,13 +85,15 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/avaLim"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_marginHorizontal="20dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/avatar_lim" />
+                        android:src="@drawable/avatar_lim"
+                        app:civ_border_color="#FF000000"
+                        app:civ_border_width="2dp" />
 
                     <TextView
                         android:id="@+id/textView4"
@@ -103,13 +109,15 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/avaWolf"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_marginHorizontal="20dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/avatar_wolp" />
+                        android:src="@drawable/avatar_wolp"
+                        app:civ_border_color="#FF000000"
+                        app:civ_border_width="2dp" />
 
                     <TextView
                         android:id="@+id/textView5"

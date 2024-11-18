@@ -16,124 +16,180 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_messages"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="15dp">
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp">
 
-                        <ImageView
-                            android:id="@+id/imageView"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:layout_marginHorizontal="10dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/avatar_diia" />
+                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/avatar_diia"
+                        app:civ_border_color="#FF000000"
+                        app:civ_border_width="2dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/msgStamp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="2024/11/18 08:00"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/textView11"
-                            android:layout_width="129dp"
-                            android:layout_height="78dp"
-                            android:background="@android:drawable/dialog_holo_dark_frame"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rect_corner_oval_dark"
                             android:backgroundTintMode="add"
+                            android:maxWidth="275dp"
                             android:padding="20dp"
                             android:text="こんにちは！"
                             android:textColor="@color/white" />
 
-                    </TableRow>
+                    </LinearLayout>
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="right"
-                        android:padding="20dp">
+                </TableRow>
 
-                        <Space
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right"
+                    android:padding="20dp">
 
-                        <TextView
-                            android:id="@+id/textView17"
-                            android:layout_width="wrap_content"
-                            android:layout_height="78dp"
-                            android:background="@color/material_dynamic_primary70"
-                            android:backgroundTintMode="add"
-                            android:padding="20dp"
-                            android:text="質問聞いてもいいですか？"
-                            android:textColor="@color/white" />
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
 
-                    </TableRow>
+                    <TextView
+                        android:id="@+id/textView17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="78dp"
+                        android:background="@drawable/rect_corner_oval_user"
+                        android:backgroundTintMode="add"
+                        android:padding="20dp"
+                        android:text="質問聞いてもいいですか？"
+                        android:textColor="@color/white" />
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="20dp">
+                </TableRow>
 
-                        <ImageView
-                            android:id="@+id/imageView3"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:layout_marginHorizontal="10dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/avatar_diia" />
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="20dp">
 
-                        <TextView
-                            android:id="@+id/textView18"
-                            android:layout_width="129dp"
-                            android:layout_height="78dp"
-                            android:background="@android:drawable/dialog_holo_dark_frame"
-                            android:backgroundTintMode="add"
-                            android:padding="20dp"
-                            android:text="嫌だな・・・"
-                            android:textColor="@color/white" />
-                    </TableRow>
+                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/avatar_diia"
+                        app:civ_border_color="#FF000000"
+                        app:civ_border_width="2dp" />
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="right"
-                        android:padding="20dp">
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="129dp"
+                        android:layout_height="78dp"
+                        android:background="@drawable/rect_corner_oval_dark"
+                        android:backgroundTintMode="add"
+                        android:padding="20dp"
+                        android:text="嫌だな・・・"
+                        android:textColor="@color/white" />
+                </TableRow>
 
-                        <Space
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right"
+                    android:padding="20dp">
 
-                        <TextView
-                            android:id="@+id/textView19"
-                            android:layout_width="wrap_content"
-                            android:layout_height="78dp"
-                            android:background="@color/material_dynamic_primary70"
-                            android:backgroundTintMode="add"
-                            android:padding="20dp"
-                            android:text="泣く泣く・・・( ﾉД`)ｼｸｼｸ…"
-                            android:textColor="@color/white" />
-                    </TableRow>
-                </TableLayout>
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/textView19"
+                        android:layout_width="wrap_content"
+                        android:layout_height="78dp"
+                        android:background="@drawable/rect_corner_oval_user"
+                        android:backgroundTintMode="add"
+                        android:padding="20dp"
+                        android:text="泣く泣く・・・( ﾉД`)ｼｸｼｸ…"
+                        android:textColor="@color/white" />
+                </TableRow>
+            </TableLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
+    <!--
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        >-->
 
-        <com.google.android.material.textfield.TextInputEditText
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Input text here..."
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:padding="8dp"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/composeBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/rect_oval_white"
+                android:elevation="2dp"
+                android:hint="Input text here..."
+                android:maxLength="512"
+                android:maxLines="4"
+                android:minLines="1"
+                android:padding="8dp"
+                android:paddingEnd="40dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/imgSend"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:elevation="21dp"
+            app:srcCompat="@drawable/ic_sendmsg"
+            app:tint="@color/send_button" />
+    </RelativeLayout>
+
+    <!--</com.google.android.material.textfield.TextInputLayout>-->
 
 </LinearLayout>

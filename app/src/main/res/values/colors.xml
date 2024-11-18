@@ -11,6 +11,7 @@
     <color name="aquamarine">#a1e8cc</color>
     <color name="outer_space">#495159</color>
     <color name="text_hint">#757575</color>
+    <color name="send_button">#659beb</color>
 
     <!-- Toast Styles -->
     <color name="tt_warning">#ff5f64</color>

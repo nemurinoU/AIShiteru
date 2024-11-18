@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.prototype.aishiteru.R
 import com.prototype.aishiteru.databinding.FragmentChatroomBinding
+import io.github.muddz.styleabletoast.StyleableToast
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -36,6 +38,19 @@ class ChatroomFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // do stuff here
+        /*
+        TO DO: You better send the message and make it save to the database :)
+         */
+        binding.imgSend.setOnClickListener {
+            StyleableToast.makeText(
+                requireContext(),
+                "Message sent!",
+                Toast.LENGTH_SHORT,
+                R.style.neutralToast
+            ).show()
+        }
     }
 
 

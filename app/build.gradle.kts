@@ -76,4 +76,8 @@ dependencies {
     // stylable toasts!
     implementation("io.github.muddz:styleabletoast:2.4.0")
 
+
+    //circle images
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+
 }
