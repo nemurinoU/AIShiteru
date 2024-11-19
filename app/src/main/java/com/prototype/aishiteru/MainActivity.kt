@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity(){//, OnMapReadyCallback {
                 .setAnchorView(R.id.fabMaps).show()*/
 
             binding.efabCheckin.visibility = View.VISIBLE
+
             val currentDestinationId = navController.currentDestination?.id
             val actionId = when (currentDestinationId) {
                 R.id.ChatlistFragment -> R.id.action_ChatlistFragment_to_MapFragment

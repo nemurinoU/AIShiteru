@@ -19,7 +19,22 @@ class CustomDate {
         min = c[Calendar.MINUTE]
     }
 
-    // When supplied the day, month, an d year, create the date accordingly.
+    // Getters
+    fun getYear(): Int {
+        return year
+    }
+
+    fun getMonth(): Int {
+        return month
+    }
+
+    fun getDay(): Int {
+        return day_in_month
+    }
+
+
+    // When supplied the day, month, and year, create the date accordingly.
+
     // Month here is expected to be 0-11
     constructor(year: Int, month: Int, day_in_month: Int, hour: Int = 0, min: Int = 0) {
         this.year = year
@@ -66,4 +81,6 @@ class CustomDate {
             "Dec"
         )
     }
+
+
 }
