@@ -11,13 +11,15 @@ import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
 import android.view.View
 import androidx.navigation.fragment.findNavController
+import com.prototype.aishiteru.classes.CastItem
 import com.prototype.aishiteru.databinding.ActivityMainBinding
 
 
 // For location and fused location provider
 
 
-class MainActivity : AppCompatActivity(){//, OnMapReadyCallback {
+class MainActivity : AppCompatActivity() {//, OnMapReadyCallback {
+
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -163,4 +165,5 @@ class MainActivity : AppCompatActivity(){//, OnMapReadyCallback {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
+
 }

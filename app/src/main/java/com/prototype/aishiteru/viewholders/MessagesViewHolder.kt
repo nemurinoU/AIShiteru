@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.prototype.aishiteru.classes.CastItem
 import de.hdodenhof.circleimageview.CircleImageView
 
 class MessagesViewHolder(itemView:View):ViewHolder(itemView) {
@@ -23,12 +24,12 @@ class MessagesViewHolder(itemView:View):ViewHolder(itemView) {
     // bind the data of each message in a chatroom accordingly
     // we need to get the properties of the constructor
     // let's break this down
-    fun bindMessageData(data: MessageItem) {
+    fun bindMessageData(data: MessageItem, recipient: String) {
         //viewHolder.textView_message_text.text = data.text
 
 
         // later make it so that the condition changes with the chatroom opened
-        if (data.sender.userId.startsWith("0x") && data.sender.name.equals("Diiaphy Nakao")) {
+        if (data.sender.userId.startsWith("0x") && data.sender.name.equals(recipient)) {
             time.setText(data.time.toStringISO(true)) // time stamp
             body.setText(data.text)
 
@@ -42,7 +43,7 @@ class MessagesViewHolder(itemView:View):ViewHolder(itemView) {
             body.setBackgroundResource(R.drawable.rect_corner_oval_dark)
             row.setHorizontalGravity(Gravity.LEFT)
         }
-        else if (data.sender.userId.equals("-1") && data.recipient.name.equals("Diiaphy Nakao")){
+        else if (data.sender.userId.equals("-1") && data.recipient.name.equals(recipient)){
             time.setText(data.time.toStringISO(true)) // time stamp
             body.setText(data.text)
             // if the message is from the user

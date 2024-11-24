@@ -1,5 +1,6 @@
 package com.prototype.aishiteru.fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,12 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.prototype.aishiteru.DataGenerator
+import com.prototype.aishiteru.DataListener
 import com.prototype.aishiteru.R
 import com.prototype.aishiteru.adapters.MessageAdapter
+import com.prototype.aishiteru.classes.CastItem
 import com.prototype.aishiteru.classes.MessageItem
 import com.prototype.aishiteru.databinding.FragmentChatroomBinding
 import io.github.muddz.styleabletoast.StyleableToast
@@ -24,6 +28,7 @@ class ChatroomFragment : Fragment() {
 
     private var _binding: FragmentChatroomBinding? = null
     private lateinit var recyclerView: RecyclerView
+    private lateinit var recipientName: String
 
     private val messages : ArrayList<MessageItem> = DataGenerator.generateMessages()
 
@@ -47,15 +52,18 @@ class ChatroomFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         // do stuff here
         /*
         TO DO: You better send the message and make it save to the database :)
          */
         //recycler view
         recyclerView = binding.recyclerViewMessages
+        this.recipientName = arguments?.getString("name").toString()
 
-        // set the adapter
-        this.recyclerView.adapter = MessageAdapter(this.messages)
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = this.recipientName
+                // set the adapter
+        this.recyclerView.adapter = MessageAdapter(this.messages, this.recipientName)
 
         this.recyclerView.layoutManager =  LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 

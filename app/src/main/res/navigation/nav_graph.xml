@@ -49,6 +49,9 @@
         android:name="com.prototype.aishiteru.fragments.ChatroomFragment"
         android:label="@string/chatroom_fragment_label"
         tools:layout="@layout/fragment_chatroom">
+        <argument
+            android:name="name"
+            app:argType="string" />
         <action
             android:id="@+id/action_ChatroomFragment_to_MapFragment"
             app:destination="@id/MapFragment" />

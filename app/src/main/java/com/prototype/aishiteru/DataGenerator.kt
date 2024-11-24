@@ -31,5 +31,9 @@ class DataGenerator {
 
             return messages
         }
+
+        fun loadCast(): ArrayList<CastItem> {
+            return ArrayList(castList)
+        }
     }
 }
