@@ -50,10 +50,7 @@ class ChatroomFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-        // do stuff here
+        super.onViewCreated(view, savedInstanceState);
         /*
         TO DO: You better send the message and make it save to the database :)
          */
@@ -61,8 +58,10 @@ class ChatroomFragment : Fragment() {
         recyclerView = binding.recyclerViewMessages
         this.recipientName = arguments?.getString("name").toString()
 
+        // set title bar to recipient name
         (requireActivity() as AppCompatActivity).supportActionBar?.title = this.recipientName
-                // set the adapter
+
+        // set the adapter
         this.recyclerView.adapter = MessageAdapter(this.messages, this.recipientName)
 
         this.recyclerView.layoutManager =  LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
