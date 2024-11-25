@@ -19,6 +19,7 @@ import com.prototype.aishiteru.adapters.MessageAdapter
 import com.prototype.aishiteru.classes.CastItem
 import com.prototype.aishiteru.classes.MessageItem
 import com.prototype.aishiteru.databinding.FragmentChatroomBinding
+import com.prototype.aishiteru.helpers.PromptBuilder
 import io.github.muddz.styleabletoast.StyleableToast
 
 /**
@@ -52,7 +53,6 @@ class ChatroomFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         // do stuff here
         /*
         TO DO: You better send the message and make it save to the database :)
@@ -66,6 +66,23 @@ class ChatroomFragment : Fragment() {
         this.recyclerView.adapter = MessageAdapter(this.messages, this.recipientName)
 
         this.recyclerView.layoutManager =  LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+        // Debugging of prompt builder
+        val promptBuilder = PromptBuilder(this.requireContext())
+        val debugString = promptBuilder.buildPrompt(
+            this.recipientName, // Name of character
+            "Jeff", // Name of user
+            1, // Relation level
+            false, // Is chatroom Japenis?
+            this.messages.toTypedArray(), // Conversation history
+            null // Additional context like "This roleplay happens in Starbucks, a ____"
+        )
+        println(debugString)
+        // Debugging of prompt builder
+
+        for (message in this.messages) {
+            println("Sender: ${message.sender.name}, Text: ${message.text})")
+        }
 
         binding.imgSend.setOnClickListener {
             StyleableToast.makeText(
