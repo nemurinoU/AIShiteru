@@ -1,14 +1,17 @@
 package com.prototype.aishiteru.fragments
 
+import android.graphics.Rect
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.widget.ScrollView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
@@ -44,7 +47,7 @@ class ChatroomFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var scrollView : ScrollView
+    private lateinit var scrollView : NestedScrollView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -290,8 +293,6 @@ class ChatroomFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-
-
     }
 
     private fun getSessionUID() : String {
@@ -300,8 +301,35 @@ class ChatroomFragment : Fragment() {
     }
 
     private fun jumpToBottom () {
-        this.scrollView.post {
-            this.scrollView.fullScroll(View.FOCUS_DOWN)
-        }
+
+        val rootView: View = binding.root
+        rootView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                val rect = Rect()
+                rootView.getWindowVisibleDisplayFrame(rect)
+                val screenHeight = rootView.height
+                val keypadHeight = screenHeight - rect.bottom
+
+                // Check if the keyboard is visible
+                val isKeyboardVisible = keypadHeight > screenHeight * 0.15
+
+                if (isKeyboardVisible) {
+                    // Keyboard is visible
+                    scrollView.scrollToBottom()
+                } else {
+                    // Keyboard is hidden
+                    scrollView.post { scrollView.fullScroll(View.FOCUS_DOWN) }
+                }
+            }
+        })
     }
+
+    fun NestedScrollView.scrollToBottom() {
+        val lastChild = getChildAt(scrollView.childCount - 1)
+        val bottom = lastChild.bottom + scrollView.paddingBottom
+        val delta = bottom - (scrollView.scrollY+ scrollView.height)
+        scrollView.smoothScrollBy(0, delta)
+    }
+
+
 }
