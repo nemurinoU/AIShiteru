@@ -4,7 +4,7 @@ import com.prototype.aishiteru.classes.CustomDate
 class MessageItem(text:         String,
                   time:         CustomDate,
                   sender:       CastItem,
-                  recipient:    CastItem)
+                  recipient:    String)
 {
     var text = text
         private set
@@ -20,4 +20,5 @@ class MessageItem(text:         String,
 
     var recipient = recipient
         private set
+
 }

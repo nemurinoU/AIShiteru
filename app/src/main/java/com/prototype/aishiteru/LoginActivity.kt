@@ -18,15 +18,23 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
+import com.prototype.aishiteru.classes.CastItem
 import com.prototype.aishiteru.databinding.ActivityLoginBinding
 import io.github.muddz.styleabletoast.StyleableToast
 
 class LoginActivity : AppCompatActivity() {
+    private val db = FirebaseFirestore.getInstance()
+
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private val reqCode:Int=123
 
+    /***
+     *  This function starts the activity with the sign in intent
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -36,19 +44,11 @@ class LoginActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-
-        /*
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-        */
-
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
+
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         mGoogleSignInClient.signOut()
         auth.signOut()
@@ -65,11 +65,9 @@ class LoginActivity : AppCompatActivity() {
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
+                            //val user = auth.currentUser
                             Log.d(TAG, "signInWithEmail:success")
-                            val user = auth.currentUser
-
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
+                            revealMain(email)
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.exception)
@@ -89,8 +87,15 @@ class LoginActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT,
                     R.style.cautionToast
                 ).show()
+                Log.d(TAG, e.toString())
             }
             catch (e: Exception) {
+                StyleableToast.makeText(
+                    baseContext,
+                    getString(R.string.empty_logreg),
+                    Toast.LENGTH_SHORT,
+                    R.style.cautionToast
+                ).show()
                 Log.d(TAG, e.toString())
             }
         }
@@ -108,36 +113,39 @@ class LoginActivity : AppCompatActivity() {
 
         //Firebase.auth.signOut()
     }
-    // end of onCreate()
 
+
+    /***
+     *  This function starts the activity with the sign in intent
+     */
     public override fun onStart() {
         super.onStart()
 
         // check if user is already signed in
         // if they are, then just go to main
-
-
         val currentUser = auth.currentUser
 
-        /*
-        if(GoogleSignIn.getLastSignedInAccount(this)!=null){
-            startActivity(Intent(this, MainActivity::class.java))
+        val gCreds = GoogleSignIn.getLastSignedInAccount(this)
+        if(gCreds!=null){
+            revealMain(gCreds.email.toString())
+            //startActivity(Intent(this, MainActivity::class.java))
             finish()
-        }*/
+        }
 
         if (currentUser != null) {
             val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            revealMain(currentUser.email.toString())
+            //startActivity(intent)
         }
     }
-    //end of onStart()
 
-    private  fun signInWithGoogle(){
-
+    /***
+     *  This function starts the activity with the sign in intent
+     */
+    private fun signInWithGoogle(){
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, reqCode)
     }
-    // end of signInWithGoogle()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -146,7 +154,6 @@ class LoginActivity : AppCompatActivity() {
             handleResult(task)
         }
     }
-
 
     private fun handleResult(completedTask: Task<GoogleSignInAccount>){
         try {
@@ -172,10 +179,38 @@ class LoginActivity : AppCompatActivity() {
                 //account.email.toString() <--- the user's email
                 //account.displayName.toString()) <--- the user's name
                 val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+                val user = User(account.displayName.toString().split(" ")[0],
+                                account.email.toString())
+
+                storeUserData(user) // store it in the database
+
+                revealMain(account.email.toString())
+                //startActivity(intent)
                 finish()
             }
         }
     }
 
+    private fun storeUserData(user: User) {
+        val docRef = db.collection("users").document(user.userId) // Assuming email is unique
+
+        // Option 1: Replace the entire document
+        docRef.set(user)
+            .addOnSuccessListener { Log.d("Firestore", "DocumentSnapshot successfully written!") }
+            .addOnFailureListener { e -> Log.w("Firestore", "Error writing document", e) }
+
+        // Option 2: Merge data into the document (if it exists)
+        docRef.set(user, SetOptions.merge())
+            .addOnSuccessListener { Log.d("Firestore", "DocumentSnapshot successfully written!") }
+            .addOnFailureListener { e -> Log.w("Firestore", "Error writing document", e) }
+    }
+
+    private fun revealMain (uid : String) {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("SESSION_UID", uid)
+        startActivity(intent)
+    }
+
+    // Your User data class
+    data class User(val name: String, val userId: String)
 }

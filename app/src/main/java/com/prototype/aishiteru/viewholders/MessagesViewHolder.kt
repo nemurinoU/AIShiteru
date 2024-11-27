@@ -29,7 +29,7 @@ class MessagesViewHolder(itemView:View):ViewHolder(itemView) {
 
 
         // later make it so that the condition changes with the chatroom opened
-        if (data.sender.userId.startsWith("0x") && data.sender.name.equals(recipient)) {
+        if (data.sender.userId.startsWith("0x")) {
             time.setText(data.time.toStringISO(true)) // time stamp
             body.setText(data.text)
 
@@ -43,7 +43,7 @@ class MessagesViewHolder(itemView:View):ViewHolder(itemView) {
             body.setBackgroundResource(R.drawable.rect_corner_oval_dark)
             row.setHorizontalGravity(Gravity.LEFT)
         }
-        else if (data.sender.userId.equals("-1") && data.recipient.name.equals(recipient)){
+        else {
             time.setText(data.time.toStringISO(true)) // time stamp
             body.setText(data.text)
             // if the message is from the user
@@ -53,8 +53,6 @@ class MessagesViewHolder(itemView:View):ViewHolder(itemView) {
             row.setHorizontalGravity(Gravity.RIGHT) // move to the right
             time.textAlignment = View.TEXT_ALIGNMENT_TEXT_END
         }
-        else {
-            row.visibility = View.GONE
-        }
+
     }
 }
