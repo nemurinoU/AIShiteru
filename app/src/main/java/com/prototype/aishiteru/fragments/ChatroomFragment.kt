@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.ScrollView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,6 +44,7 @@ class ChatroomFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var scrollView : ScrollView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +52,8 @@ class ChatroomFragment : Fragment() {
     ): View {
 
         _binding = FragmentChatroomBinding.inflate(inflater, container, false)
+
+        scrollView = binding.chatScroll
 
         getActivity()?.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
@@ -94,6 +98,8 @@ class ChatroomFragment : Fragment() {
                 val timestamp = CustomDate()
                 val msgsCollection = db.collection("messages")
 
+
+
                 // save it to this collection!
                 msgsCollection
                     .whereEqualTo("from_name", fromName)
@@ -132,53 +138,28 @@ class ChatroomFragment : Fragment() {
                                     "msg_num" to newNum
                                 )
 
+                                this.incoming_msgs.add(
+                                    MessageItem(
+                                        draftMsg,
+                                        timestamp,
+                                        CastItem(user, 0, SESSION_UID),
+                                        this.fromName,
+                                        newNum
+                                    )
+                                )
+
                                 msgList.add(new_msg)
                                     .addOnSuccessListener {
                                         println("Message added to subcollection: ${it.id}")
 
                                         binding.composeBox.setText("")
+                                        recyclerView.adapter?.notifyDataSetChanged()
+                                        jumpToBottom()
                                     }
                                     .addOnFailureListener { exception ->
                                         println("Error adding review: ${exception}")
                                     }
                             }
-
-                        /*
-                        CoroutineScope(Dispatchers.IO).launch {
-                            val query = msgList.orderBy("msg_num")
-                            val highestValueDoc = query.limit(1).get().await()
-                            var highestValue = -1
-                            // Check if a document was found
-                            if (highestValueDoc != null) {
-                                for (document in highestValueDoc) {
-                                    highestValue = (document.get("yourField") as? Long)!!.toInt()
-                                }
-                                println("Highest value: $highestValue")
-                            } else {
-                                println("No documents found")
-                            }
-
-                            val new_msg = mapOf(
-                                "add_time" to mapOf(
-                                    "year" to timestamp.getYear().toString(),
-                                    "month" to timestamp.getMonth().toString(),
-                                    "day" to timestamp.getDay().toString(),
-                                    "hour" to timestamp.getHour().toString(),
-                                    "min" to timestamp.getMin().toString()
-                                ),
-                                "content" to draftMsg,
-                                "from_uid" to SESSION_UID,
-                                "msg_num" to highestValue+1
-                            )
-
-                            msgList.add(new_msg)
-                                .addOnSuccessListener {
-                                    println("Message added to subcollection: ${it.id}")
-                                }
-                                .addOnFailureListener { exception ->
-                                    println("Error adding review: ${exception}")
-                                }
-                        }*/
                     }
             }
             else {
@@ -303,6 +284,7 @@ class ChatroomFragment : Fragment() {
     private fun startRecycler() {
         this.recyclerView.adapter = MessageAdapter(this.incoming_msgs, this.fromName)
         this.recyclerView.layoutManager =  LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        jumpToBottom()
     }
 
     override fun onDestroyView() {
@@ -313,5 +295,11 @@ class ChatroomFragment : Fragment() {
     private fun getSessionUID() : String {
         val mainActivity = activity as? MainActivity
         return mainActivity?.getSessionUID().toString()
+    }
+
+    private fun jumpToBottom () {
+        this.scrollView.post {
+            this.scrollView.fullScroll(View.FOCUS_DOWN)
+        }
     }
 }

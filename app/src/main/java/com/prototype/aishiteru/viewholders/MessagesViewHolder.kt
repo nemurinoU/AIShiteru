@@ -31,6 +31,7 @@ class MessagesViewHolder(itemView:View):ViewHolder(itemView) {
         // later make it so that the condition changes with the chatroom opened
         if (data.sender.userId.startsWith("0x")) {
             time.setText(data.time.toStringISO(true)) // time stamp
+            time.setGravity(Gravity.START)
             body.setText(data.text)
 
             // if the message is from a bot

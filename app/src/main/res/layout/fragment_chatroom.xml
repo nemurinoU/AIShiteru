@@ -9,6 +9,7 @@
     tools:context=".fragments.ChatroomFragment">
 
     <ScrollView
+        android:id="@+id/chatScroll"
         android:layout_width="match_parent"
         android:layout_height="472dp">
 
