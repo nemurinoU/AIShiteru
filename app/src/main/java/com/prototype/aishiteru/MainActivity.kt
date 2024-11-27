@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {//, OnMapReadyCallback {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var sessionUserId: String
+    private lateinit var sessionName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -169,10 +170,15 @@ class MainActivity : AppCompatActivity() {//, OnMapReadyCallback {
 
     private fun setSession() {
         this.sessionUserId = intent.getStringExtra("SESSION_UID").toString()
+        this.sessionName = intent.getStringExtra("SESSION_NAME").toString()
     }
 
-    fun getSession () : String {
+    fun getSessionUID () : String {
         return this.sessionUserId
+    }
+
+    fun getSessionName () : String {
+        return this.sessionName
     }
 
 }

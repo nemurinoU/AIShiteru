@@ -10,15 +10,16 @@ import com.prototype.aishiteru.classes.MessageItem
 import kotlinx.coroutines.*
 
 class DataGenerator {
-/*
+
     companion object {
+
         private val db = FirebaseFirestore.getInstance()
 
         private val cast1 : CastItem = CastItem ("Limon C. Saida", R.drawable.avatar_lim, "0x1")
         private val cast2 : CastItem = CastItem ("Diiaphy Nakao", R.drawable.avatar_diia, "0x2")
         private val cast3 : CastItem = CastItem ("Doko Niiruno", R.drawable.avatar_doko, "0x3")
         private val cast4 : CastItem = CastItem ("Wolf Chii", R.drawable.avatar_wolp, "0x4")
-        private val cast5 : CastItem = CastItem ("{user}", R.drawable.ai, "-1")
+        private val cast5 : CastItem = CastItem ("{user}", R.drawable.ai, "iceswiftslade2002@gmail.com")
 
         private val castList = listOf(cast1, cast2, cast3, cast4)
 
@@ -28,17 +29,18 @@ class DataGenerator {
 
             for (cast in castList) {
                 // Add a message from the cast member to the user
-                messages.add(MessageItem("Hello from ${cast.name}!", currentDate, cast, cast5))
+                messages.add(MessageItem("Hello from ${cast.name}!", currentDate, cast, cast5.name))
                 // Add a reply from the user to the cast member
-                messages.add(MessageItem("Reply from ${cast5.name} to ${cast.name}", currentDate, cast5, cast))
+                messages.add(MessageItem("Reply from ${cast5.name} to ${cast.name}", currentDate, cast5, cast.name))
                 // Add another message from the user to the cast member
-                messages.add(MessageItem("How are you, ${cast.name}?", currentDate, cast5, cast))
+                messages.add(MessageItem("How are you, ${cast.name}?", currentDate, cast5, cast.name))
                 // Add a reply from the cast member to the user
-                messages.add(MessageItem("I'm good, ${cast5.name}. How about you?", currentDate, cast, cast5))
+                messages.add(MessageItem("I'm good, ${cast5.name}. How about you?", currentDate, cast, cast5.name))
             }
 
             return messages
         }
+
 
         fun loadMessagesToDatabase() {
             GlobalScope.launch {
@@ -55,34 +57,13 @@ class DataGenerator {
                     val messages = ArrayList<MessageItem>()
 
                     // Add a message from the cast member to the user
-                    messages.add(MessageItem("Hello from ${cast.name}!", currentDate, cast, cast5))
+                    messages.add(MessageItem("Hello from ${cast.name}!", currentDate, cast, cast5.name))
                     // Add a reply from the user to the cast member
-                    messages.add(
-                        MessageItem(
-                            "Reply from ${cast5.name} to ${cast.name}",
-                            currentDate,
-                            cast5,
-                            cast
-                        )
-                    )
+                    messages.add(MessageItem("Reply from ${cast5.name} to ${cast.name}", currentDate, cast5, cast.name))
                     // Add another message from the user to the cast member
-                    messages.add(
-                        MessageItem(
-                            "How are you, ${cast.name}?",
-                            currentDate,
-                            cast5,
-                            cast
-                        )
-                    )
+                    messages.add(MessageItem("How are you, ${cast5.name}?", currentDate, cast, cast.name))
                     // Add a reply from the cast member to the user
-                    messages.add(
-                        MessageItem(
-                            "I'm good, ${cast5.name}. How about you?",
-                            currentDate,
-                            cast,
-                            cast5
-                        )
-                    )
+                    messages.add(MessageItem("I'm good, ${cast.name}. How about you?", currentDate, cast5, cast.name))
 
                     val cast_name = cast.name
                     val cast_uid = cast.userId
@@ -91,6 +72,12 @@ class DataGenerator {
 
                     for (item in messages) {
 
+                        val uidAlt = if ((ctr + 1) % 2 == 0) {
+                            cast5.userId
+                        }
+                        else {
+                            cast.userId
+                        }
                         val new_msg = mapOf(
                             "add_time" to mapOf(
                                 "year" to currentDate.getYear().toString(),
@@ -100,7 +87,7 @@ class DataGenerator {
                                 "min" to currentDate.getMin().toString()
                             ),
                             "content" to item.text,
-                            "from_uid" to cast.userId,
+                            "from_uid" to uidAlt,
                             "msg_num" to ctr
                         )
                         ctr = ctr + 1
@@ -160,7 +147,6 @@ class DataGenerator {
                 }
             }
         }
-
         fun loadCast(): ArrayList<CastItem> {
             return ArrayList(castList)
         }
@@ -197,6 +183,5 @@ class DataGenerator {
             // ... your code ...
         }
 
-
-    }*/
+    }
 }

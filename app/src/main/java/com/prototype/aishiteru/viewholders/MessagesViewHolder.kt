@@ -53,6 +53,5 @@ class MessagesViewHolder(itemView:View):ViewHolder(itemView) {
             row.setHorizontalGravity(Gravity.RIGHT) // move to the right
             time.textAlignment = View.TEXT_ALIGNMENT_TEXT_END
         }
-
     }
 }

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
+import com.prototype.aishiteru.DataGenerator
 import com.prototype.aishiteru.MainActivity
 import com.prototype.aishiteru.R
 import com.prototype.aishiteru.adapters.MessageAdapter
@@ -18,7 +19,12 @@ import com.prototype.aishiteru.classes.CastItem
 import com.prototype.aishiteru.classes.CustomDate
 import com.prototype.aishiteru.classes.MessageItem
 import com.prototype.aishiteru.databinding.FragmentChatroomBinding
+import com.google.firebase.firestore.Query
 import io.github.muddz.styleabletoast.StyleableToast
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -29,6 +35,8 @@ class ChatroomFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var fromName: String
     private lateinit var fromUid: String
+    private lateinit var SESSION_UID: String
+    private lateinit var user: String
 
     private var incoming_msgs : ArrayList<MessageItem> = ArrayList<MessageItem>()
 
@@ -51,6 +59,7 @@ class ChatroomFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         // load the recycler view
         recyclerView = binding.recyclerViewMessages
 
@@ -61,44 +70,31 @@ class ChatroomFragment : Fragment() {
         (requireActivity() as AppCompatActivity).supportActionBar?.title = this.fromName
 
         // set the adapter and layout manager
-        getMessages()
-
-        startRecycler()
-
+        loadChats()
 
         binding.imgSend.setOnClickListener {
+            /*
             StyleableToast.makeText(
                 requireContext(),
                 "Message sent!",
                 Toast.LENGTH_SHORT,
                 R.style.neutralToast
             ).show()
-        }
-    }
+            */
 
-    private fun getMessages () {
-        // messages -> key pair -> msg list of two people
-        val usersCollection = db.collection("users")
-        val msgsCollection = db.collection("messages")
-        val mainActivity = activity as? MainActivity
-        val SESSION_UID = mainActivity?.getSession().toString()
-
-        var user = ""
+            // check if the text box is empty
+            val draftMsg = binding.composeBox.text.toString()
 
 
+            if (!draftMsg.isEmpty()) {
+                // if not empty
+                // save the message
+                // update the UI
 
-        // after i get this
-        usersCollection.document(SESSION_UID).get()
-            .addOnSuccessListener { snapshot ->
-                val data = snapshot.data
-                user = data?.get("name").toString()
-                println("HELLO HELLO !!!")
-            }
-            .addOnFailureListener { exception ->
-                println("Error getting document: ${exception}")
-            }
-            .addOnCompleteListener {
-                // get the messages where == to the needs
+                val timestamp = CustomDate()
+                val msgsCollection = db.collection("messages")
+
+                // save it to this collection!
                 msgsCollection
                     .whereEqualTo("from_name", fromName)
                     .whereEqualTo("from_uid", fromUid)
@@ -106,8 +102,116 @@ class ChatroomFragment : Fragment() {
                     .whereEqualTo("to_uid", SESSION_UID)
                     .get()
                     .addOnSuccessListener { snapshot ->
-                        if (!snapshot.isEmpty) {
-                            val existingDocument = snapshot.documents[0]
+                        val existingDoc = snapshot.documents[0]
+                        val msgsRef = msgsCollection.document(existingDoc.id) // Get the existing document reference
+                        val msgList = msgsRef.collection("msglist")
+                        var newNum = 0
+
+                        msgList.orderBy("msg_num", Query.Direction.DESCENDING)
+                            .limit(1)
+                            .get()
+                            .addOnSuccessListener() { snapshot ->
+                                if (snapshot.isEmpty()) {
+                                    newNum = 0
+                                }
+                                else {
+                                    val tempNum = snapshot.getDocuments().get(0).getLong("msg_num")
+                                    newNum = tempNum!!.toInt() + 1
+                                }
+
+                                val new_msg = mapOf(
+                                    "add_time" to mapOf(
+                                        "year" to timestamp.getYear().toString(),
+                                        "month" to timestamp.getMonth().toString(),
+                                        "day" to timestamp.getDay().toString(),
+                                        "hour" to timestamp.getHour().toString(),
+                                        "min" to timestamp.getMin().toString()
+                                    ),
+                                    "content" to draftMsg,
+                                    "from_uid" to SESSION_UID,
+                                    "msg_num" to newNum
+                                )
+
+                                msgList.add(new_msg)
+                                    .addOnSuccessListener {
+                                        println("Message added to subcollection: ${it.id}")
+
+                                        binding.composeBox.setText("")
+                                    }
+                                    .addOnFailureListener { exception ->
+                                        println("Error adding review: ${exception}")
+                                    }
+                            }
+
+                        /*
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val query = msgList.orderBy("msg_num")
+                            val highestValueDoc = query.limit(1).get().await()
+                            var highestValue = -1
+                            // Check if a document was found
+                            if (highestValueDoc != null) {
+                                for (document in highestValueDoc) {
+                                    highestValue = (document.get("yourField") as? Long)!!.toInt()
+                                }
+                                println("Highest value: $highestValue")
+                            } else {
+                                println("No documents found")
+                            }
+
+                            val new_msg = mapOf(
+                                "add_time" to mapOf(
+                                    "year" to timestamp.getYear().toString(),
+                                    "month" to timestamp.getMonth().toString(),
+                                    "day" to timestamp.getDay().toString(),
+                                    "hour" to timestamp.getHour().toString(),
+                                    "min" to timestamp.getMin().toString()
+                                ),
+                                "content" to draftMsg,
+                                "from_uid" to SESSION_UID,
+                                "msg_num" to highestValue+1
+                            )
+
+                            msgList.add(new_msg)
+                                .addOnSuccessListener {
+                                    println("Message added to subcollection: ${it.id}")
+                                }
+                                .addOnFailureListener { exception ->
+                                    println("Error adding review: ${exception}")
+                                }
+                        }*/
+                    }
+            }
+            else {
+                // if empty nothing happens
+            }
+
+        }
+
+    }
+
+    private fun loadChats () {
+        // messages -> key pair -> msg list of two people
+        val usersCollection = db.collection("users")
+        val msgsCollection = db.collection("messages")
+
+        // get the SESSION_UID
+        SESSION_UID = getSessionUID()
+
+        // First, we have to get the display name of the user
+        usersCollection.document(SESSION_UID).get()
+            .addOnSuccessListener { snapshot ->
+                val data = snapshot.data
+                this.user = data?.get("name").toString()
+
+                msgsCollection
+                    .whereEqualTo("from_name", fromName)
+                    .whereEqualTo("from_uid", fromUid)
+                    .whereEqualTo("to_name", this.user)
+                    .whereEqualTo("to_uid", SESSION_UID)
+                    .get()
+                    .addOnSuccessListener { snapshotX ->
+                        if (!snapshotX.isEmpty) {
+                            val existingDocument = snapshotX.documents[0]
                             val msgsRef = msgsCollection.document(existingDocument.id) // Get the existing document reference
                             val msgList = msgsRef.collection("msglist")
 
@@ -115,38 +219,44 @@ class ChatroomFragment : Fragment() {
                             msgsRef.get()
                                 .addOnSuccessListener { roomSnap ->
                                     val roomData = roomSnap.data
-                                    val botAva = roomData?.get("from_ava") as? Int ?: 0 // Safe cast and default value
-                                    val msgTo = roomData?.get("to_name") as? String ?: "" // Safe cast and default value
-
+                                    val botAva = roomData?.get("from_ava") as? Long
+                                    val msgTo = roomData?.get("to_name") as? String
                                     // Iterate through the documents in the 'msglist' subcollection
                                     msgList.get()
                                         .addOnSuccessListener { msgSnapshot ->
                                             if (!msgSnapshot.isEmpty) {
+
                                                 for (msgDocument in msgSnapshot.documents) {
                                                     // Access the message data
                                                     val msgData = msgDocument.data
 
-                                                    val msgTime = msgData?.get("add_time") as? Map<String, Int>
+                                                    val msgTime = msgData?.get("add_time") as? Map<String, String>
                                                     val msgContent = msgData?.get("content") as? String
-                                                    val msgNum = msgData?.get("msg_num") as? Int
+                                                    val msgNum = msgData?.get("msg_num") as? Long
+                                                    val msgFrom = msgData?.get("from_uid") as? String
 
-                                                    val year = msgTime?.get("year")?.toInt() ?: 0
-                                                    val month = msgTime?.get("month")?.toInt() ?: 0
-                                                    val day = msgTime?.get("day")?.toInt() ?: 0
-                                                    val hour = msgTime?.get("hour")?.toInt() ?: 0
-                                                    val min = msgTime?.get("min")?.toInt() ?: 0
+                                                    val year = msgTime?.get("year")
+                                                    val month = msgTime?.get("month")
+                                                    val day = msgTime?.get("day")
+                                                    val hour = msgTime?.get("hour")
+                                                    val min = msgTime?.get("min")
 
                                                     val currentDate = CustomDate(
-                                                        year,
-                                                        month,
-                                                        day,
-                                                        hour,
-                                                        min
+                                                        year!!.toInt(),
+                                                        month!!.toInt(),
+                                                        day!!.toInt(),
+                                                        hour!!.toInt(),
+                                                        min!!.toInt()
                                                     )
 
                                                     // in order to generate the array of messages
                                                     // i need the pertinent data
-                                                    val tempCast = CastItem(this.fromName, botAva ?: 0, this.fromUid)
+
+                                                    val tempCast = if (msgFrom.toString().startsWith("0x")) {
+                                                        CastItem(this.fromName, botAva!!.toInt(), this.fromUid)
+                                                    } else {
+                                                        CastItem(user, 0, SESSION_UID)
+                                                    }
 
                                                     println("${msgContent.toString()}")
                                                     println("${currentDate}")
@@ -157,12 +267,19 @@ class ChatroomFragment : Fragment() {
                                                             msgContent.toString(),
                                                             currentDate,
                                                             tempCast,
-                                                            msgTo
+                                                            msgTo!!.toString(),
+                                                            msgNum!!.toInt()
                                                         )
                                                     )
                                                 }
+
+                                                this.incoming_msgs.sortBy { it.msg_num }
+
+                                                startRecycler()
+
+
                                             } else {
-                                                println("3 No messages found in the subcollection.")
+                                                println("No messages found in the subcollection.")
                                             }
                                         }
                                         .addOnFailureListener { exception ->
@@ -172,19 +289,15 @@ class ChatroomFragment : Fragment() {
                                 .addOnFailureListener { exception ->
                                     println("Error getting room data: ${exception}")
                                 }
-                        } else {
-                            println("2 Document cannot be found.")
                         }
                     }
                     .addOnFailureListener { exception ->
-                        println("2 Error getting document: ${exception}")
+                        println("Error getting document: ${exception}")
                     }
-                    .addOnCompleteListener {
-                        println("what ${this.incoming_msgs.size}")
-                    }
-
             }
-
+            .addOnFailureListener { exception ->
+                println("Error getting document: ${exception}")
+            }
     }
 
     private fun startRecycler() {
@@ -195,5 +308,10 @@ class ChatroomFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun getSessionUID() : String {
+        val mainActivity = activity as? MainActivity
+        return mainActivity?.getSessionUID().toString()
     }
 }
