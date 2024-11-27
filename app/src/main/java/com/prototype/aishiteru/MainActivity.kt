@@ -10,15 +10,20 @@ import android.view.Menu
 import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
 import android.view.View
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.firestore.FirebaseFirestore
 import com.prototype.aishiteru.classes.CastItem
 import com.prototype.aishiteru.databinding.ActivityMainBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 // For location and fused location provider
 
 
 class MainActivity : AppCompatActivity() {//, OnMapReadyCallback {
+    private val db = FirebaseFirestore.getInstance()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
@@ -170,7 +175,19 @@ class MainActivity : AppCompatActivity() {//, OnMapReadyCallback {
 
     private fun setSession() {
         this.sessionUserId = intent.getStringExtra("SESSION_UID").toString()
-        this.sessionName = intent.getStringExtra("SESSION_NAME").toString()
+
+        val usersCollection = db.collection("users")
+
+        usersCollection.document(sessionUserId).get()
+            .addOnSuccessListener { snapshot ->
+                val data = snapshot.data
+                sessionName = data?.get("name").toString()
+
+                DataGenerator.initializeDatabase(sessionName, sessionUserId)
+            }
+
+
+
     }
 
     fun getSessionUID () : String {

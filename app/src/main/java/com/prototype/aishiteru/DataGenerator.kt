@@ -8,6 +8,7 @@ import com.prototype.aishiteru.classes.CastItem
 import com.prototype.aishiteru.classes.CustomDate
 import com.prototype.aishiteru.classes.MessageItem
 import kotlinx.coroutines.*
+import androidx.lifecycle.lifecycleScope
 
 class DataGenerator {
 
@@ -41,6 +42,58 @@ class DataGenerator {
             return messages
         }
 
+        fun initializeDatabase(user : String, uid : String) {
+            val messagesCollection = db.collection("messages")
+
+            /***
+             * For my sake, I'm putting in the pre-generated data in the database so I don't have to type it all again.
+             */
+            for (cast in castList) {
+                val cast_name = cast.name
+                val cast_uid = cast.userId
+                val cast_ava = cast.imageId
+
+                val convoFields = mapOf(
+                    "from_ava" to cast_ava,
+                    "from_name" to cast_name,
+                    "from_uid" to cast_uid,
+                    "to_name" to user, // change this later
+                    "to_uid" to uid
+                )
+
+                messagesCollection
+                    .whereEqualTo("to_uid", uid)
+                    .get()
+                    .addOnSuccessListener { snapshot ->
+                            if (snapshot.documents.size == 4) {
+                                // pass
+                            } else {
+                                messagesCollection
+                                    .document()
+                                    .set(convoFields, SetOptions.merge())
+                                    .addOnSuccessListener {
+                                        Log.d(
+                                            "Firestore",
+                                            "DocumentSnapshot successfully written!"
+                                        )
+                                    }
+                                    .addOnFailureListener { e ->
+                                        Log.w(
+                                            "Firestore",
+                                            "Error writing document",
+                                            e
+                                        )
+                                    }
+                            }
+
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("Firestore", "Error writing document", e)
+
+                    }
+            }
+        }
+
 
         fun loadMessagesToDatabase() {
             GlobalScope.launch {
@@ -56,6 +109,7 @@ class DataGenerator {
                 for (cast in castList) {
                     val messages = ArrayList<MessageItem>()
 
+                    /*
                     // Add a message from the cast member to the user
                     messages.add(MessageItem("Hello from ${cast.name}!", currentDate, cast, cast5.name))
                     // Add a reply from the user to the cast member
@@ -64,7 +118,7 @@ class DataGenerator {
                     messages.add(MessageItem("How are you, ${cast5.name}?", currentDate, cast, cast.name))
                     // Add a reply from the cast member to the user
                     messages.add(MessageItem("I'm good, ${cast.name}. How about you?", currentDate, cast5, cast.name))
-
+                    */
                     val cast_name = cast.name
                     val cast_uid = cast.userId
                     val cast_ava = cast.imageId

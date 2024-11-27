@@ -199,6 +199,8 @@ class ChatroomFragment : Fragment() {
 
                                             } else {
                                                 println("No messages found in the subcollection.")
+                                                println("Attempting to start recycler...")
+                                                startRecycler()
                                             }
                                         }
                                         .addOnFailureListener { exception ->
@@ -280,68 +282,72 @@ class ChatroomFragment : Fragment() {
                 .whereEqualTo("to_uid", SESSION_UID)
                 .get()
                 .addOnSuccessListener { snapshot ->
-                    val existingDoc = snapshot.documents[0]
-                    val msgsRef = msgsCollection.document(existingDoc.id) // Get the existing document reference
-                    val msgList = msgsRef.collection("msglist")
-                    var newNum = 0
+                    if (snapshot.isEmpty()) {
+                        // pass
+                    } else {
+                        val existingDoc = snapshot.documents[0]
+                        val msgsRef =
+                            msgsCollection.document(existingDoc.id) // Get the existing document reference
+                        val msgList = msgsRef.collection("msglist")
+                        var newNum = 0
 
-                    msgList.orderBy("msg_num", Query.Direction.DESCENDING)
-                        .limit(1)
-                        .get()
-                        .addOnSuccessListener() { snapshot ->
-                            if (snapshot.isEmpty()) {
-                                newNum = 0
-                            }
-                            else {
-                                val tempNum = snapshot.getDocuments().get(0).getLong("msg_num")
-                                newNum = tempNum!!.toInt() + 1
-                            }
+                        msgList.orderBy("msg_num", Query.Direction.DESCENDING)
+                            .limit(1)
+                            .get()
+                            .addOnSuccessListener() { snapshot ->
+                                if (snapshot.isEmpty()) {
+                                    newNum = 0
+                                } else {
+                                    val tempNum = snapshot.getDocuments().get(0).getLong("msg_num")
+                                    newNum = tempNum!!.toInt() + 1
+                                }
 
-                            val new_msg = mapOf(
-                                "add_time" to mapOf(
-                                    "year" to timestamp.getYear().toString(),
-                                    "month" to timestamp.getMonth().toString(),
-                                    "day" to timestamp.getDay().toString(),
-                                    "hour" to timestamp.getHour().toString(),
-                                    "min" to timestamp.getMin().toString()
-                                ),
-                                "content" to draftMsg,
-                                "from_uid" to SESSION_UID,
-                                "msg_num" to newNum
-                            )
-
-                            this.incoming_msgs.add(
-                                MessageItem(
-                                    draftMsg,
-                                    timestamp,
-                                    CastItem(user, 0, SESSION_UID),
-                                    this.fromName, // recipient
-                                    newNum
+                                val new_msg = mapOf(
+                                    "add_time" to mapOf(
+                                        "year" to timestamp.getYear().toString(),
+                                        "month" to timestamp.getMonth().toString(),
+                                        "day" to timestamp.getDay().toString(),
+                                        "hour" to timestamp.getHour().toString(),
+                                        "min" to timestamp.getMin().toString()
+                                    ),
+                                    "content" to draftMsg,
+                                    "from_uid" to SESSION_UID,
+                                    "msg_num" to newNum
                                 )
-                            )
 
-                            msgList.add(new_msg)
-                                .addOnSuccessListener {
-                                    println("Message added to subcollection: ${it.id}")
+                                this.incoming_msgs.add(
+                                    MessageItem(
+                                        draftMsg,
+                                        timestamp,
+                                        CastItem(user, 0, SESSION_UID),
+                                        this.fromName, // recipient
+                                        newNum
+                                    )
+                                )
 
-                                    binding.composeBox.setText("")
-                                    recyclerView.adapter?.notifyDataSetChanged()
-                                    jumpToBottom()
+                                msgList.add(new_msg)
+                                    .addOnSuccessListener {
+                                        println("Message added to subcollection: ${it.id}")
 
-                                    lifecycleScope.launch {
-                                        delay(1000L)
-                                        startBreathingAnimation(binding.isTypingView, 4000)
-                                        binding.isTypingView.text = "${fromName} is typing..."
-                                        delay(4000L)
+                                        binding.composeBox.setText("")
+                                        recyclerView.adapter?.notifyDataSetChanged()
+                                        jumpToBottom()
 
-                                        callKayra()
+                                        lifecycleScope.launch {
+                                            delay(1000L)
+                                            startBreathingAnimation(binding.isTypingView, 4000)
+                                            binding.isTypingView.text = "${fromName} is typing..."
+                                            delay(4000L)
+
+                                            callKayra()
+                                        }
+
                                     }
-
-                                }
-                                .addOnFailureListener { exception ->
-                                    println("Error adding review: ${exception}")
-                                }
-                        }
+                                    .addOnFailureListener { exception ->
+                                        println("Error adding review: ${exception}")
+                                    }
+                            }
+                    }
                 }
         }
         else {
