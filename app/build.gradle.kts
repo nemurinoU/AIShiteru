@@ -1,3 +1,6 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -16,9 +19,16 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    // Load API key from local.properties
+    val localProperties = Properties()
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localProperties.load(FileInputStream(localPropertiesFile))
+    }
+    val kayraApiKey: String = localProperties.getProperty("KAYRA_API_KEY") ?: ""
 
     buildTypes {
         release {
@@ -27,6 +37,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        // Add the API key as a BuildConfig field
+        all {
+            buildConfigField("String", "KAYRA_API_KEY", "\"$kayraApiKey\"")
         }
     }
     compileOptions {
@@ -38,6 +52,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -88,13 +103,16 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx:23.0.0")
     implementation ("androidx.credentials:credentials:1.2.2")
     implementation ("androidx.credentials:credentials-play-services-auth:1.2.2")
-    implementation ("com.google.android.libraries.identity.googleid:googleid")
+    implementation ("com.google.android.libraries.identity.googleid:googleid:1.1.1")
 
     // stylable toasts!
     implementation("io.github.muddz:styleabletoast:2.4.0")
 
-
     //circle images
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
+    // for HTTP Requests (NovelAI)
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
 }

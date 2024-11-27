@@ -15,6 +15,11 @@ import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.prototype.aishiteru.BuildConfig
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -74,8 +79,6 @@ class ChatroomFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        // load the recycler view
         recyclerView = binding.recyclerViewMessages
 
         // set title bar to recipient name, the person the user is chatting with
@@ -86,6 +89,23 @@ class ChatroomFragment : Fragment() {
 
         // set the adapter and layout manager
         loadChats()
+
+        ////////  Debugging of prompt builder ////////
+        val charName = this.recipientName
+        val promptBuilder = PromptBuilder(this.requireContext())
+        val debugString = promptBuilder.buildPrompt(
+            charName, // Name of character
+            "Jeff", // Name of user
+            1, // Relation level
+            false, // Is chatroom Japenis?
+            this.messages.toTypedArray(), // Conversation history
+            null // Additional context like "This roleplay happens in Starbucks, a ____"
+        )
+        println(debugString)
+        //////// End of debugging ////////
+
+        //////// Debugging of text generator ////////
+        val kayraAPI = KayraAPI(requireContext())
 
         binding.imgSend.setOnClickListener {
             /*
