@@ -290,6 +290,8 @@ class ChatroomFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+
+
     }
 
     private fun getSessionUID() : String {

@@ -9,6 +9,7 @@ import android.text.SpannableString
 import android.text.style.StyleSpan
 import android.view.Gravity
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -20,6 +21,7 @@ class MessagesViewHolder(itemView:View):ViewHolder(itemView) {
     private val time: TextView = itemView.findViewById(R.id.msgTimestamp)
     private val body: TextView = itemView.findViewById(R.id.msgBody)
     private val row: TableRow = itemView.findViewById(R.id.tblAlign)
+    private val container: LinearLayout = itemView.findViewById(R.id.msgContentContainer)
 
     // bind the data of each message in a chatroom accordingly
     // we need to get the properties of the constructor
@@ -47,6 +49,8 @@ class MessagesViewHolder(itemView:View):ViewHolder(itemView) {
         else {
             time.setText(data.time.toStringISO(true)) // time stamp
             body.setText(data.text)
+            container.setGravity(Gravity.END)
+
             // if the message is from the user
             //av.setImageResource(data.imageId) // no profile photo needed
             av.visibility = View.GONE
