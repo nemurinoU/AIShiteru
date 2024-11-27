@@ -21,9 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.prototype.aishiteru.BuildConfig
 import androidx.core.widget.NestedScrollView
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.prototype.aishiteru.DataGenerator
 import com.prototype.aishiteru.MainActivity
@@ -34,6 +31,8 @@ import com.prototype.aishiteru.classes.CustomDate
 import com.prototype.aishiteru.classes.MessageItem
 import com.prototype.aishiteru.databinding.FragmentChatroomBinding
 import com.google.firebase.firestore.Query
+import com.prototype.aishiteru.helpers.KayraAPI
+import com.prototype.aishiteru.helpers.PromptBuilder
 import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -54,6 +53,7 @@ class ChatroomFragment : Fragment() {
     private lateinit var SESSION_UID: String
     private lateinit var user: String
     private var botAva: Long = 0
+    private lateinit var promptBuilder : PromptBuilder
 
     private var incoming_msgs : ArrayList<MessageItem> = ArrayList<MessageItem>()
 
@@ -78,7 +78,7 @@ class ChatroomFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        this.promptBuilder = PromptBuilder(this.requireContext())
         recyclerView = binding.recyclerViewMessages
 
         // set title bar to recipient name, the person the user is chatting with
@@ -90,22 +90,8 @@ class ChatroomFragment : Fragment() {
         // set the adapter and layout manager
         loadChats()
 
-        ////////  Debugging of prompt builder ////////
-        val charName = this.recipientName
-        val promptBuilder = PromptBuilder(this.requireContext())
-        val debugString = promptBuilder.buildPrompt(
-            charName, // Name of character
-            "Jeff", // Name of user
-            1, // Relation level
-            false, // Is chatroom Japenis?
-            this.messages.toTypedArray(), // Conversation history
-            null // Additional context like "This roleplay happens in Starbucks, a ____"
-        )
-        println(debugString)
-        //////// End of debugging ////////
 
-        //////// Debugging of text generator ////////
-        val kayraAPI = KayraAPI(requireContext())
+
 
         binding.imgSend.setOnClickListener {
             /*
@@ -348,11 +334,8 @@ class ChatroomFragment : Fragment() {
                                         binding.isTypingView.text = "${fromName} is typing..."
                                         delay(4000L)
 
-                                        generateResponse()
+                                        callKayra()
                                     }
-
-
-
 
                                 }
                                 .addOnFailureListener { exception ->
@@ -370,10 +353,29 @@ class ChatroomFragment : Fragment() {
      * This is where the AI's response get's generated.
      *
      */
-    private fun generateResponse () {
+    private fun callKayra () {
         binding.isTypingView.text = ""
-        val response = "AI MESSAGE"
-        storeAIResponse(response)
+        ////////  Debugging of prompt builder ////////
+        val charName = this.fromName
+
+        val debugString = promptBuilder.buildPrompt(
+            charName, // Name of character
+            this.user, // Name of user
+            1, // Relation level
+            false, // Is chatroom Japenis?
+            this.incoming_msgs.toTypedArray(), // Conversation history
+            null // Additional context like "This roleplay happens in Starbucks, a ____"
+        )
+        println(debugString)
+        //////// End of debugging ////////
+
+        //////// Debugging of text generator ////////
+        val kayraAPI = KayraAPI(requireContext())
+
+        lifecycleScope.launch{
+            val response = kayraAPI.generateResponse(debugString, charName)
+            storeAIResponse(response)
+        }
     }
 
     private fun storeAIResponse (response : String) {
