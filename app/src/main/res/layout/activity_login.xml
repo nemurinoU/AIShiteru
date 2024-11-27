@@ -71,12 +71,12 @@
 
     <TextView
         android:id="@+id/toForgot"
-        android:textColor="@color/aquamarine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:text="Forgot Password?"
-        />
+        android:textColor="@color/aquamarine"
+        tools:visibility="gone" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/toGoogle"

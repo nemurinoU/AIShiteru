@@ -41,7 +41,8 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="adjustPan"
+            android:windowSoftInputMode="adjustResize"
+            android:fitsSystemWindows="true"
             android:exported="true"
             android:theme="@style/Theme.AIShiteru" />
 

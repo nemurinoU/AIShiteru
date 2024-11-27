@@ -69,6 +69,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.3.0") //location
     implementation("androidx.core:core-ktx:1.12.") // for ActivityCompat?
     implementation("com.google.android.material:material:1.1.0")
+    implementation(libs.firebase.firestore.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

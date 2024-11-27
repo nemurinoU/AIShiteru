@@ -32,6 +32,14 @@ class CustomDate {
         return day_in_month
     }
 
+    fun getHour(): Int {
+        return hour
+    }
+
+    fun getMin(): Int {
+        return min
+    }
+
 
     // When supplied the day, month, and year, create the date accordingly.
 

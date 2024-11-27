@@ -1,10 +1,11 @@
 package com.prototype.aishiteru.classes
 
-class CastItem (name: String, lvl: Int, imageId : Int, userId : String) {
+// regular users have their userId as their email
+// lvl is set to -1
+// name is just their username
+// imageId is 0
+class CastItem (name: String, imageId : Int, userId : String) {
     var name = name
-        private set
-
-    var lvl = lvl
         private set
 
     var imageId = imageId

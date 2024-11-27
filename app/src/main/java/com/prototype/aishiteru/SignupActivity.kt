@@ -12,12 +12,16 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
+import com.prototype.aishiteru.LoginActivity.User
 import com.prototype.aishiteru.databinding.ActivityLoginBinding
 import com.prototype.aishiteru.databinding.ActivitySignupBinding
 import io.github.muddz.styleabletoast.StyleableToast
 
 class SignupActivity : AppCompatActivity() {
+    private val db = FirebaseFirestore.getInstance()
     private lateinit var binding: ActivitySignupBinding
     private lateinit var auth: FirebaseAuth
 
@@ -41,6 +45,7 @@ class SignupActivity : AppCompatActivity() {
         binding.btnNext.setOnClickListener{
             try {
                 // get the data of the user
+                val name = binding.registerUsername.getText().toString().split(" ")[0]
                 val email = binding.registerEmail.getText().toString().trim()
                 val pw = binding.registerPassword.getText().toString().trim()
                 val cpw = binding.repeatPassword.getText().toString().trim()
@@ -55,7 +60,14 @@ class SignupActivity : AppCompatActivity() {
                             if (task.isSuccessful) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "createUserWithEmail:success")
-                                val user = auth.currentUser
+                                //val user = auth.currentUser
+
+                                /*
+                                val data : Map<String, String>  = HashMap<String, String>();
+                                FirebaseFirestore.getInstance().collection("test").add(data);*/
+                                // store the new google user in the database
+                                val user = User(name, email)
+                                storeUserData(user)
 
                                 val intent = Intent(this, MainActivity::class.java)
                                 startActivity(intent)
@@ -102,8 +114,30 @@ class SignupActivity : AppCompatActivity() {
         // if they are, then just go to main activity
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            revealMain(currentUser.getEmail().toString())
         }
     }
+
+    private fun storeUserData(user: User) {
+        val docRef = db.collection("users").document(user.userId) // Assuming email is unique
+
+        // Option 1: Replace the entire document
+        docRef.set(user)
+            .addOnSuccessListener { Log.d("Firestore", "DocumentSnapshot successfully written!") }
+            .addOnFailureListener { e -> Log.w("Firestore", "Error writing document", e) }
+
+        // Option 2: Merge data into the document (if it exists)
+        docRef.set(user, SetOptions.merge())
+            .addOnSuccessListener { Log.d("Firestore", "DocumentSnapshot successfully written!") }
+            .addOnFailureListener { e -> Log.w("Firestore", "Error writing document", e) }
+    }
+
+    private fun revealMain (uid : String) {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("SESSION_UID", uid)
+        startActivity(intent)
+    }
+
+    // Your User data class
+    data class User(val name: String, val userId: String)
 }

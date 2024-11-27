@@ -21,6 +21,7 @@
             app:civ_border_width="2dp" />
 
         <LinearLayout
+            android:id="@+id/msgContentContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -29,6 +30,7 @@
                 android:id="@+id/msgTimestamp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minWidth="30dp"
                 android:text="2024/11/18 08:00"
                 android:textSize="12sp" />
 
