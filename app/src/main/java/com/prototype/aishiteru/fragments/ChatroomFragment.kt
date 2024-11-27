@@ -1,7 +1,10 @@
 package com.prototype.aishiteru.fragments
 
+import android.animation.ObjectAnimator
 import android.graphics.Rect
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +12,11 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.widget.ScrollView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
@@ -27,8 +32,10 @@ import com.google.firebase.firestore.Query
 import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.delay
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -41,6 +48,7 @@ class ChatroomFragment : Fragment() {
     private lateinit var fromUid: String
     private lateinit var SESSION_UID: String
     private lateinit var user: String
+    private var botAva: Long = 0
 
     private var incoming_msgs : ArrayList<MessageItem> = ArrayList<MessageItem>()
 
@@ -89,86 +97,7 @@ class ChatroomFragment : Fragment() {
             ).show()
             */
 
-            // check if the text box is empty
-            val draftMsg = binding.composeBox.text.toString()
-
-
-            if (!draftMsg.isEmpty()) {
-                // if not empty
-                // save the message
-                // update the UI
-
-                val timestamp = CustomDate()
-                val msgsCollection = db.collection("messages")
-
-
-
-                // save it to this collection!
-                msgsCollection
-                    .whereEqualTo("from_name", fromName)
-                    .whereEqualTo("from_uid", fromUid)
-                    .whereEqualTo("to_name", user)
-                    .whereEqualTo("to_uid", SESSION_UID)
-                    .get()
-                    .addOnSuccessListener { snapshot ->
-                        val existingDoc = snapshot.documents[0]
-                        val msgsRef = msgsCollection.document(existingDoc.id) // Get the existing document reference
-                        val msgList = msgsRef.collection("msglist")
-                        var newNum = 0
-
-                        msgList.orderBy("msg_num", Query.Direction.DESCENDING)
-                            .limit(1)
-                            .get()
-                            .addOnSuccessListener() { snapshot ->
-                                if (snapshot.isEmpty()) {
-                                    newNum = 0
-                                }
-                                else {
-                                    val tempNum = snapshot.getDocuments().get(0).getLong("msg_num")
-                                    newNum = tempNum!!.toInt() + 1
-                                }
-
-                                val new_msg = mapOf(
-                                    "add_time" to mapOf(
-                                        "year" to timestamp.getYear().toString(),
-                                        "month" to timestamp.getMonth().toString(),
-                                        "day" to timestamp.getDay().toString(),
-                                        "hour" to timestamp.getHour().toString(),
-                                        "min" to timestamp.getMin().toString()
-                                    ),
-                                    "content" to draftMsg,
-                                    "from_uid" to SESSION_UID,
-                                    "msg_num" to newNum
-                                )
-
-                                this.incoming_msgs.add(
-                                    MessageItem(
-                                        draftMsg,
-                                        timestamp,
-                                        CastItem(user, 0, SESSION_UID),
-                                        this.fromName,
-                                        newNum
-                                    )
-                                )
-
-                                msgList.add(new_msg)
-                                    .addOnSuccessListener {
-                                        println("Message added to subcollection: ${it.id}")
-
-                                        binding.composeBox.setText("")
-                                        recyclerView.adapter?.notifyDataSetChanged()
-                                        jumpToBottom()
-                                    }
-                                    .addOnFailureListener { exception ->
-                                        println("Error adding review: ${exception}")
-                                    }
-                            }
-                    }
-            }
-            else {
-                // if empty nothing happens
-            }
-
+            sendMessage()
         }
 
     }
@@ -203,7 +132,7 @@ class ChatroomFragment : Fragment() {
                             msgsRef.get()
                                 .addOnSuccessListener { roomSnap ->
                                     val roomData = roomSnap.data
-                                    val botAva = roomData?.get("from_ava") as? Long
+                                    botAva = roomData?.get("from_ava") as Long
                                     val msgTo = roomData?.get("to_name") as? String
                                     // Iterate through the documents in the 'msglist' subcollection
                                     msgList.get()
@@ -324,12 +253,197 @@ class ChatroomFragment : Fragment() {
         })
     }
 
+    private fun sendMessage () {
+        // check if the text box is empty
+        val draftMsg = binding.composeBox.text.toString()
+
+        if (!draftMsg.isEmpty()) {
+            // if not empty
+            // save the message
+            // update the UI
+
+            val timestamp = CustomDate()
+            val msgsCollection = db.collection("messages")
+
+
+            // save it to this collection!
+            msgsCollection
+                .whereEqualTo("from_name", fromName)
+                .whereEqualTo("from_uid", fromUid)
+                .whereEqualTo("to_name", user)
+                .whereEqualTo("to_uid", SESSION_UID)
+                .get()
+                .addOnSuccessListener { snapshot ->
+                    val existingDoc = snapshot.documents[0]
+                    val msgsRef = msgsCollection.document(existingDoc.id) // Get the existing document reference
+                    val msgList = msgsRef.collection("msglist")
+                    var newNum = 0
+
+                    msgList.orderBy("msg_num", Query.Direction.DESCENDING)
+                        .limit(1)
+                        .get()
+                        .addOnSuccessListener() { snapshot ->
+                            if (snapshot.isEmpty()) {
+                                newNum = 0
+                            }
+                            else {
+                                val tempNum = snapshot.getDocuments().get(0).getLong("msg_num")
+                                newNum = tempNum!!.toInt() + 1
+                            }
+
+                            val new_msg = mapOf(
+                                "add_time" to mapOf(
+                                    "year" to timestamp.getYear().toString(),
+                                    "month" to timestamp.getMonth().toString(),
+                                    "day" to timestamp.getDay().toString(),
+                                    "hour" to timestamp.getHour().toString(),
+                                    "min" to timestamp.getMin().toString()
+                                ),
+                                "content" to draftMsg,
+                                "from_uid" to SESSION_UID,
+                                "msg_num" to newNum
+                            )
+
+                            this.incoming_msgs.add(
+                                MessageItem(
+                                    draftMsg,
+                                    timestamp,
+                                    CastItem(user, 0, SESSION_UID),
+                                    this.fromName, // recipient
+                                    newNum
+                                )
+                            )
+
+                            msgList.add(new_msg)
+                                .addOnSuccessListener {
+                                    println("Message added to subcollection: ${it.id}")
+
+                                    binding.composeBox.setText("")
+                                    recyclerView.adapter?.notifyDataSetChanged()
+                                    jumpToBottom()
+
+                                    lifecycleScope.launch {
+                                        delay(1000L)
+                                        startBreathingAnimation(binding.isTypingView, 4000)
+                                        binding.isTypingView.text = "${fromName} is typing..."
+                                        delay(4000L)
+
+                                        generateResponse()
+                                    }
+
+
+
+
+                                }
+                                .addOnFailureListener { exception ->
+                                    println("Error adding review: ${exception}")
+                                }
+                        }
+                }
+        }
+        else {
+            // if empty nothing happens
+        }
+    }
+
+    /***
+     * This is where the AI's response get's generated.
+     *
+     */
+    private fun generateResponse () {
+        binding.isTypingView.text = ""
+        val response = "AI MESSAGE"
+        storeAIResponse(response)
+    }
+
+    private fun storeAIResponse (response : String) {
+        val timestamp = CustomDate()
+        val msgsCollection = db.collection("messages")
+
+        // save it to this collection!
+        msgsCollection
+            .whereEqualTo("from_name", fromName)
+            .whereEqualTo("from_uid", fromUid)
+            .whereEqualTo("to_name", user)
+            .whereEqualTo("to_uid", SESSION_UID)
+            .get()
+            .addOnSuccessListener { snapshot ->
+                val existingDoc = snapshot.documents[0]
+                val msgsRef = msgsCollection.document(existingDoc.id) // Get the existing document reference
+                val msgList = msgsRef.collection("msglist")
+                var newNum = 0
+
+                msgList.orderBy("msg_num", Query.Direction.DESCENDING)
+                    .limit(1)
+                    .get()
+                    .addOnSuccessListener() { snapshot ->
+                        if (snapshot.isEmpty()) {
+                            newNum = 0
+                        }
+                        else {
+                            val tempNum = snapshot.getDocuments().get(0).getLong("msg_num")
+                            newNum = tempNum!!.toInt() + 1
+                        }
+
+                        val new_msg = mapOf(
+                            "add_time" to mapOf(
+                                "year" to timestamp.getYear().toString(),
+                                "month" to timestamp.getMonth().toString(),
+                                "day" to timestamp.getDay().toString(),
+                                "hour" to timestamp.getHour().toString(),
+                                "min" to timestamp.getMin().toString()
+                            ),
+                            "content" to response,
+                            "from_uid" to this.fromUid,
+                            "msg_num" to newNum
+                        )
+
+                        this.incoming_msgs.add(
+                            MessageItem(
+                                response,
+                                timestamp,
+                                CastItem(this.fromName, botAva.toInt(), this.fromUid),
+                                SESSION_UID,
+                                newNum
+                            )
+                        )
+
+                        msgList.add(new_msg)
+                            .addOnSuccessListener {
+                                println("Message added to subcollection: ${it.id}")
+
+                                recyclerView.adapter?.notifyDataSetChanged()
+                                jumpToBottom()
+                            }
+                            .addOnFailureListener { exception ->
+                                println("Error adding review: ${exception}")
+                            }
+                    }
+            }
+    }
+
+
     fun NestedScrollView.scrollToBottom() {
         val lastChild = getChildAt(scrollView.childCount - 1)
         val bottom = lastChild.bottom + scrollView.paddingBottom
         val delta = bottom - (scrollView.scrollY+ scrollView.height)
         scrollView.smoothScrollBy(0, delta)
     }
+
+
+
+    private fun startBreathingAnimation(textView: TextView, duration : Long) {
+        val handler = Handler(Looper.getMainLooper())
+        handler.post {
+            val animator = ObjectAnimator.ofFloat(textView, "alpha", 1f, 0.5f, 1f)
+            animator.duration = duration // 2 seconds
+            animator.repeatCount = ObjectAnimator.INFINITE
+            animator.repeatMode = ObjectAnimator.REVERSE
+            animator.start()
+
+        }
+    }
+
 
 
 }
