@@ -39,12 +39,13 @@ class PromptBuilder(private val context: Context) {
         attributesBuilder.append("[")
 
         // Helper function to process nested attributes
-        fun processAttribute(keyPrefix: String, value: Any) {
+        fun processAttribute(keyPrefix: String, value: Any, topLevelKey: String) {
             when (value) {
                 is JSONObject -> {
                     for (subKey in value.keys()) {
                         val subValue = value.get(subKey)
-                        processAttribute("$keyPrefix's $subKey", subValue)
+                        // Reset prefix to the top-level key for nested attributes
+                        processAttribute("$topLevelKey's $subKey", subValue, topLevelKey)
                     }
                 }
                 is org.json.JSONArray -> {
@@ -60,12 +61,12 @@ class PromptBuilder(private val context: Context) {
             }
         }
 
+        // Main loop to process attributes
         for ((key, value) in attributesMap) {
             if (key != "sample_dialogues" && key != "first_messages" && key != "japanese_ver") {
-                processAttribute("$charName's $key", value)
+                processAttribute("$charName's $key", value, charName)
             }
         }
-
         attributesBuilder.append("]")
 
         // Construct sample dialogues
@@ -109,12 +110,11 @@ class PromptBuilder(private val context: Context) {
         finalPrompt.append("[The following is a new roleplay scene involving $charName and $userName.")
         if (contextString.isNotEmpty()) {
             finalPrompt.append(contextString)
-            finalPrompt.append("]")
+            finalPrompt.append("]\n")
         }
         else {
-            finalPrompt.append("]")
+            finalPrompt.append("]\n")
         }
-        finalPrompt.append("\n")
         finalPrompt.append(historyBuilder.toString())
 
         return finalPrompt.toString()
@@ -135,6 +135,7 @@ class PromptBuilder(private val context: Context) {
             3 -> contextBuilder.append(" Remember that $charName and $userName are friends right now.")
             4 -> contextBuilder.append(" Remember that $charName and $userName are lovers right now.")
         }
+        // TODO: Add specific relationship levels for each character?
 
         // Add additional context if provided
         addContext?.let {

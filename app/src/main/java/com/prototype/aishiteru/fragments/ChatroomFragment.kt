@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.prototype.aishiteru.BuildConfig
 import com.prototype.aishiteru.DataGenerator
 import com.prototype.aishiteru.DataListener
 import com.prototype.aishiteru.R
@@ -19,8 +21,10 @@ import com.prototype.aishiteru.adapters.MessageAdapter
 import com.prototype.aishiteru.classes.CastItem
 import com.prototype.aishiteru.classes.MessageItem
 import com.prototype.aishiteru.databinding.FragmentChatroomBinding
+import com.prototype.aishiteru.helpers.KayraAPI
 import com.prototype.aishiteru.helpers.PromptBuilder
 import io.github.muddz.styleabletoast.StyleableToast
+import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -67,10 +71,11 @@ class ChatroomFragment : Fragment() {
 
         this.recyclerView.layoutManager =  LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        // Debugging of prompt builder
+        ////////  Debugging of prompt builder ////////
+        val charName = this.recipientName
         val promptBuilder = PromptBuilder(this.requireContext())
         val debugString = promptBuilder.buildPrompt(
-            this.recipientName, // Name of character
+            charName, // Name of character
             "Jeff", // Name of user
             1, // Relation level
             false, // Is chatroom Japenis?
@@ -78,20 +83,40 @@ class ChatroomFragment : Fragment() {
             null // Additional context like "This roleplay happens in Starbucks, a ____"
         )
         println(debugString)
-        // Debugging of prompt builder
+        //////// End of debugging ////////
 
-        for (message in this.messages) {
-            println("Sender: ${message.sender.name}, Text: ${message.text})")
-        }
+        //////// Debugging of text generator ////////
+        val kayraAPI = KayraAPI(requireContext())
 
         binding.imgSend.setOnClickListener {
-            StyleableToast.makeText(
-                requireContext(),
-                "Message sent!",
-                Toast.LENGTH_SHORT,
-                R.style.neutralToast
-            ).show()
+            // Launch a coroutine
+            viewLifecycleOwner.lifecycleScope.launch {
+                try {
+                    // Debugging of generation
+                    val generation = kayraAPI.generateResponse(debugString,charName)
+                    // Log the generation result
+                    println("Resulting Kayra Generation: "+generation)
+
+                    // Show success toast
+                    StyleableToast.makeText(
+                        requireContext(),
+                        "Message sent!",
+                        Toast.LENGTH_SHORT,
+                        R.style.neutralToast
+                    ).show()
+                } catch (e: Exception) {
+                    // Handle any exceptions
+                    e.printStackTrace()
+                    StyleableToast.makeText(
+                        requireContext(),
+                        "Error: ${e.message}",
+                        Toast.LENGTH_SHORT,
+                        R.style.neutralToast
+                    ).show()
+                }
+            }
         }
+        //////// End of debugging ////////
     }
 
 
