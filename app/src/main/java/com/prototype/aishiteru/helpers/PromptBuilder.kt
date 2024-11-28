@@ -11,7 +11,7 @@ class PromptBuilder(private val context: Context) {
         userName: String, // Name of user
         relationLvl: Int, // Ranges from 1 to 4
         isJapanese: Boolean, // If Japanese, use JP version sample dialogues
-        convoHistory: Array<MessageItem>, // Conversation history of chatroom
+        convoHistory: Array<MessageItem>? = null, // Conversation history (optional)
         addContext: String? = null
     ): String {
         // Convert character name to file name (first word, lowercase)
@@ -96,12 +96,6 @@ class PromptBuilder(private val context: Context) {
         // Handle additional context
         val contextString = buildContext(charName, userName, relationLvl, addContext)
 
-        // Append conversation history
-        val historyBuilder = StringBuilder()
-        convoHistory.forEach { message ->
-            historyBuilder.append("${message.sender.name}: ${message.text}\n")
-        }
-
         // Combine all parts
         val finalPrompt = StringBuilder()
         finalPrompt.append(attributesBuilder.toString())
@@ -111,13 +105,53 @@ class PromptBuilder(private val context: Context) {
         if (contextString.isNotEmpty()) {
             finalPrompt.append(contextString)
             finalPrompt.append("]\n")
-        }
-        else {
+        } else {
             finalPrompt.append("]\n")
         }
-        finalPrompt.append(historyBuilder.toString())
+
+        // Append conversation history if available
+        convoHistory?.let {
+            val historyBuilder = StringBuilder()
+            convoHistory.forEach { message ->
+                historyBuilder.append("${message.sender.name}: ${message.text}\n")
+            }
+            finalPrompt.append(historyBuilder.toString())
+        }
 
         return finalPrompt.toString()
+    }
+
+    fun getFirstMessage(
+        charName: String,
+        keyword: String? = null,
+        isJapanese: Boolean
+    ): String {
+        // Convert character name to file name (first word, lowercase)
+        val fileName = charName.split(" ")[0].lowercase() + ".json"
+        println("Attempting to load file: '$fileName'")
+
+        // Load JSON file
+        val jsonString = loadJSONFromAsset("characters/$fileName")
+        val characterJSON = JSONObject(jsonString)
+
+        // Get the correct first_messages section
+        val firstMessages = if (isJapanese) {
+            characterJSON.getJSONObject("japanese_ver").getJSONObject("first_messages")
+        } else {
+            characterJSON.getJSONObject("first_messages")
+        }
+
+        return if (keyword != null && firstMessages.has(keyword)) {
+            firstMessages.getString(keyword)
+        } else  {
+            // Default to the first sample dialogue if no keyword is given or keyword not found
+            val sampleDialogues = if (!isJapanese) {
+                characterJSON.getJSONArray("sample_dialogues")
+            } else {
+                characterJSON.getJSONObject("japanese_ver").getJSONArray("sample_dialogues")
+            }
+            sampleDialogues.getJSONArray(0).getString(1) // Return the character's first sample dialogue
+        }
     }
 
     private fun buildContext(
@@ -135,7 +169,6 @@ class PromptBuilder(private val context: Context) {
             3 -> contextBuilder.append(" Remember that $charName and $userName are friends right now.")
             4 -> contextBuilder.append(" Remember that $charName and $userName are lovers right now.")
         }
-        // TODO: Add specific relationship levels for each character?
 
         // Add additional context if provided
         addContext?.let {
