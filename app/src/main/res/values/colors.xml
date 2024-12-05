@@ -19,4 +19,21 @@
     <color name="tt_caution">#ec7b04</color>
     <color name="tt_proceed">#6ec57f</color>
     <color name="tt_neutral">#659beb</color>
+
+    <color name="background_light">#FFFFFFFF</color> <!-- Background color for dark mode -->
+
+    <!-- Primary Colors -->
+    <color name="primary_color">#fa6a91</color> <!-- Soft pink from the button -->
+    <color name="primary_variant">#f5f2f2</color> <!-- A slightly muted pink for variants -->
+
+    <!-- Secondary Colors -->
+    <color name="secondary_color">#c5decd</color> <!-- Light mint green for text or buttons -->
+    <color name="secondary_variant">#a1e8cc</color> <!-- Slightly darker mint green -->
+
+    <!-- Accent Colors -->
+    <color name="accent_color">#659beb</color> <!-- Blue for highlighting text or buttons -->
+    <color name="hint_text_color">#757575</color> <!-- Grey for hint texts -->
+    <color name="disabled_button_color">#B0BEC5</color> <!-- Grey for disabled button state -->
+
+
 </resources>
