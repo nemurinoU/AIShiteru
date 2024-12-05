@@ -26,5 +26,26 @@
             map:cameraTilt="30"
             tools:context=".MainActivity" />
 
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/efabCheckin"
+            android:layout_width="wrap_content"
+            android:layout_height="86dp"
+            android:layout_margin="8dp"
+            android:contentDescription="@string/app_name"
+            android:gravity="center"
+
+            android:text="@string/checkin"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:translationY="-50dp"
+            app:layout_anchor="@+id/fabMaps"
+            app:layout_anchorGravity="top|center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

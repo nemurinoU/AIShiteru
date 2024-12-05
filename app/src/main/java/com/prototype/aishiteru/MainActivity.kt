@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {//, OnMapReadyCallback {
                 .setAction("Action", null)
                 .setAnchorView(R.id.fabAchievements).show()*/
 
-            binding.efabCheckin.visibility = View.VISIBLE
+            //binding.efabCheckin.visibility = View.VISIBLE
             val currentDestinationId = navController.currentDestination?.id
             val actionId = when (currentDestinationId) {
                 R.id.ChatlistFragment -> R.id.action_ChatlistFragment_to_AchievementFragment
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {//, OnMapReadyCallback {
                 .setAction("Action", null)
                 .setAnchorView(R.id.fabChats).show()*/
 
-            binding.efabCheckin.visibility = View.VISIBLE
+            //binding.efabCheckin.visibility = View.VISIBLE
 
             val currentDestinationId = navController.currentDestination?.id
             val actionId = when (currentDestinationId) {
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {//, OnMapReadyCallback {
                 .setAction("Action", null)
                 .setAnchorView(R.id.fabMaps).show()*/
 
-            binding.efabCheckin.visibility = View.VISIBLE
+            //binding.efabCheckin.visibility = View.VISIBLE
 
             val currentDestinationId = navController.currentDestination?.id
             val actionId = when (currentDestinationId) {
@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity() {//, OnMapReadyCallback {
                 .setAction("Action", null)
                 .setAnchorView(R.id.fabNews).show()*/
 
-            binding.efabCheckin.visibility = View.VISIBLE
+            //binding.efabCheckin.visibility = View.VISIBLE
 
             val currentDestinationId = navController.currentDestination?.id
             val actionId = when (currentDestinationId) {
@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity() {//, OnMapReadyCallback {
                 .setAction("Action", null)
                 .setAnchorView(R.id.fabQuiz).show()*/
 
-            binding.efabCheckin.visibility = View.VISIBLE
+            //.efabCheckin.visibility = View.VISIBLE
 
             val currentDestinationId = navController.currentDestination?.id
             val actionId = when (currentDestinationId) {
@@ -143,12 +143,13 @@ class MainActivity : AppCompatActivity() {//, OnMapReadyCallback {
             actionId?.let { navController.navigate(it) }
         }
 
+        /*
         binding.efabCheckin.setOnClickListener { view ->
             Snackbar.make(view, "Checked in!", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
                 .setAnchorView(R.id.fabNews).show()
 
-        }
+        }*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
