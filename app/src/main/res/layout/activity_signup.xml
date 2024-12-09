@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@color/outer_space"
+    android:orientation="vertical"
+    tools:context=".SignupActivity">
+
+    <ImageView
+        android:id="@+id/icLogo"
+        android:layout_width="match_parent"
+        android:layout_height="308dp"
+        app:srcCompat="@drawable/ai" />
+
+    <TextView
+        android:id="@+id/lblSignup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign Up"
+        android:textAlignment="center"
+        android:textColor="@color/almond"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/registerUsername"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="emailAddress"
+        android:inputType="textEmailAddress"
+        android:hint="What is your name?"
+        android:textColorHint="@color/text_hint"
+        android:backgroundTint="@color/pale_dogwood"
+        android:textColor="@color/almond"
+        />
+
+    <EditText
+        android:id="@+id/registerEmail"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="emailAddress"
+        android:inputType="textEmailAddress"
+        android:hint="Email"
+        android:textColorHint="@color/text_hint"
+        android:backgroundTint="@color/pale_dogwood"
+        android:textColor="@color/almond"
+        />
+
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/registerPassword"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:autofillHints="password"
+            android:backgroundTint="@color/pale_dogwood"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textColorHint="@color/text_hint"
+            android:textColor="@color/almond"
+            />
+
+        <EditText
+            android:id="@+id/repeatPassword"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:autofillHints="password"
+            android:backgroundTint="@color/pale_dogwood"
+            android:hint="@string/retype_password"
+            android:inputType="textPassword"
+            android:textColorHint="@color/text_hint"
+            android:textColor="@color/almond"
+            />
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/next"
+        android:textSize="15sp"
+        android:layout_margin="20dp"
+        android:backgroundTint="@color/pale_dogwood"
+        />
+
+</LinearLayout>

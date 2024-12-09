@@ -2,4 +2,38 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="material_dynamic_neutral0">#00000000</color>
+    <color name="material_dynamic_primary70">#4bb6e8</color>
+    <color name="dark_mode_bg">#181818</color>
+    <color name="pale_dogwood">#fac9b8</color>
+    <color name="almond">#e5d4c0</color>
+    <color name="honeydew">#c5decd</color>
+    <color name="aquamarine">#a1e8cc</color>
+    <color name="outer_space">#495159</color>
+    <color name="text_hint">#757575</color>
+    <color name="send_button">#659beb</color>
+
+    <!-- Toast Styles -->
+    <color name="tt_warning">#ff5f64</color>
+    <color name="tt_info">#8b8d8f</color>
+    <color name="tt_caution">#ec7b04</color>
+    <color name="tt_proceed">#6ec57f</color>
+    <color name="tt_neutral">#659beb</color>
+
+    <color name="background_light">#FFFFFFFF</color> <!-- Background color for dark mode -->
+
+    <!-- Primary Colors -->
+    <color name="primary_color">#fa6a91</color> <!-- Soft pink from the button -->
+    <color name="primary_variant">#f5f2f2</color> <!-- A slightly muted pink for variants -->
+
+    <!-- Secondary Colors -->
+    <color name="secondary_color">#c5decd</color> <!-- Light mint green for text or buttons -->
+    <color name="secondary_variant">#a1e8cc</color> <!-- Slightly darker mint green -->
+
+    <!-- Accent Colors -->
+    <color name="accent_color">#659beb</color> <!-- Blue for highlighting text or buttons -->
+    <color name="hint_text_color">#757575</color> <!-- Grey for hint texts -->
+    <color name="disabled_button_color">#B0BEC5</color> <!-- Grey for disabled button state -->
+
+
 </resources>

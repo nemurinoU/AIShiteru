@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@color/outer_space"
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:id="@+id/icLogo"
+        android:layout_width="match_parent"
+        android:layout_height="308dp"
+        app:srcCompat="@drawable/ai" />
+
+    <TextView
+        android:id="@+id/lblSignin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/splash_title"
+        android:textAlignment="center"
+        android:textColor="@color/almond"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/loginEmail"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="emailAddress"
+        android:inputType="textEmailAddress"
+        android:hint="Email"
+        android:textColorHint="@color/text_hint"
+        android:backgroundTint="@color/pale_dogwood"
+        android:textColor="@color/almond"
+        />
+
+    <EditText
+        android:id="@+id/loginPassword"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="password"
+        android:inputType="textPassword"
+        android:hint="@string/password"
+        android:textColorHint="@color/text_hint"
+        android:backgroundTint="@color/pale_dogwood"
+        android:textColor="@color/almond"
+        />
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:textSize="15sp"
+        android:layout_margin="20dp"
+        android:backgroundTint="@color/pale_dogwood"
+        />
+
+    <TextView
+        android:id="@+id/toSignup"
+        android:textColor="@color/aquamarine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/first_time"
+        />
+
+    <TextView
+        android:id="@+id/toForgot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Forgot Password?"
+        android:textColor="@color/aquamarine"
+        tools:visibility="gone" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/toGoogle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
