@@ -61,9 +61,9 @@ class CustomDate {
 
     fun toStringISO(detailed: Boolean = false): String {
         if (detailed)
-            return year.toString() + "/" + month.toString() + "/" + day_in_month.toString() + " " + String.format("%02d:%02d", hour,min)
+            return year.toString() + "/" + (month+1).toString() + "/" + day_in_month.toString() + " " + String.format("%02d:%02d", hour,min)
 
-        return year.toString() + "/" + month.toString() + "/" + day_in_month.toString()
+        return year.toString() + "/" + (month+1).toString() + "/" + day_in_month.toString()
     }
 
     // Example output
