@@ -7,30 +7,13 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/efabCheckin"
-        android:layout_width="wrap_content"
-        android:layout_height="86dp"
-        android:layout_margin="8dp"
-        android:contentDescription="@string/app_name"
-        android:gravity="center"
-
-        android:text="@string/checkin"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:translationY="-50dp"
-        app:layout_anchor="@+id/fabMaps"
-        app:layout_anchorGravity="top|center" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabQuiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:translationX="-52.5dp"
+        app:backgroundTint="@color/primary_color"
         app:layout_anchor="@+id/fabNews"
         app:layout_anchorGravity="start|center"
         app:srcCompat="@drawable/ic_idea" />
@@ -41,6 +24,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:translationX="-52.5dp"
+        app:backgroundTint="@color/primary_color"
         app:layout_anchor="@+id/fabMaps"
         app:layout_anchorGravity="start|center"
         app:srcCompat="@drawable/ic_newspaper" />
@@ -51,6 +35,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:translationX="-52.5dp"
+        app:backgroundTint="@color/primary_color"
         app:layout_anchor="@+id/fabChats"
         app:layout_anchorGravity="start|center"
         app:srcCompat="@drawable/ic_location" />
@@ -61,6 +46,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:translationX="-52.5dp"
+        app:backgroundTint="@color/primary_color"
         app:layout_anchor="@+id/fabAchievements"
         app:layout_anchorGravity="start|center"
         app:srcCompat="@drawable/ic_chat" />
@@ -72,6 +58,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="16dp"
+        app:backgroundTint="@color/primary_color"
         app:srcCompat="@drawable/trophy_icon" />
 
     <com.google.android.material.appbar.AppBarLayout

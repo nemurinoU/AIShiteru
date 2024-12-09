@@ -17,6 +17,7 @@
         android:clickable="true"
         android:src="@drawable/common_full_open_on_phone"
         android:tooltipText="@string/swipe"
+        app:backgroundTint="@color/primary_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
