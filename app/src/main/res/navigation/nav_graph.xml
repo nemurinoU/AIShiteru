@@ -3,26 +3,124 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/MapFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.prototype.aishiteru.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-
+        android:id="@+id/MapFragment"
+        android:name="com.prototype.aishiteru.fragments.MapFragment"
+        android:label="@string/map_fragment_label"
+        tools:layout="@layout/fragment_map">
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_MapFragment_to_ChatlistFragment"
+            app:destination="@id/ChatlistFragment" />
+        <action
+            android:id="@+id/action_MapFragment_to_NewsFragment"
+            app:destination="@id/NewsFragment" />
+        <action
+            android:id="@+id/action_MapFragment_to_AchievementFragment"
+            app:destination="@id/AchievementFragment" />
+        <action
+            android:id="@+id/action_MapFragment_to_QuizFragment"
+            app:destination="@id/QuizFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.prototype.aishiteru.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
+        android:id="@+id/ChatlistFragment"
+        android:name="com.prototype.aishiteru.fragments.ChatlistFragment"
+        android:label="@string/chatlist_fragment_label"
+        tools:layout="@layout/fragment_chatlist">
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_ChatlistFragment_to_MapFragment"
+            app:destination="@id/MapFragment" />
+        <action
+            android:id="@+id/action_ChatlistFragment_to_NewsFragment"
+            app:destination="@id/NewsFragment" />
+        <action
+            android:id="@+id/action_ChatlistFragment_to_AchievementFragment"
+            app:destination="@id/AchievementFragment" />
+        <action
+            android:id="@+id/action_ChatlistFragment_to_QuizFragment"
+            app:destination="@id/QuizFragment" />
+        <action
+            android:id="@+id/action_ChatlistFragment_to_ChatroomFragment"
+            app:destination="@id/ChatroomFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ChatroomFragment"
+        android:name="com.prototype.aishiteru.fragments.ChatroomFragment"
+        android:label="@string/chatroom_fragment_label"
+        tools:layout="@layout/fragment_chatroom">
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_ChatroomFragment_to_MapFragment"
+            app:destination="@id/MapFragment" />
+        <action
+            android:id="@+id/action_ChatroomFragment_to_ChatlistFragment"
+            app:destination="@id/ChatlistFragment" />
+        <action
+            android:id="@+id/action_ChatroomFragment_to_NewsFragment"
+            app:destination="@id/NewsFragment" />
+        <action
+            android:id="@+id/action_ChatroomFragment_to_AchievementFragment"
+            app:destination="@id/AchievementFragment" />
+        <action
+            android:id="@+id/action_ChatroomFragment_to_QuizFragment"
+            app:destination="@id/QuizFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/NewsFragment"
+        android:name="com.prototype.aishiteru.fragments.NewsFragment"
+        android:label="@string/news_activity_label"
+        tools:layout="@layout/fragment_news">
+        <action
+            android:id="@+id/action_NewsFragment_to_MapFragment"
+            app:destination="@id/MapFragment" />
+        <action
+            android:id="@+id/action_NewsFragment_to_ChatlistFragment"
+            app:destination="@id/ChatlistFragment" />
+        <action
+            android:id="@+id/action_NewsFragment_to_AchievementFragment"
+            app:destination="@id/AchievementFragment" />
+        <action
+            android:id="@+id/action_NewsFragment_to_QuizFragment"
+            app:destination="@id/QuizFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/AchievementFragment"
+        android:name="com.prototype.aishiteru.fragments.AchievementFragment"
+        android:label="@string/achievements_activity_label"
+        tools:layout="@layout/fragment_achievement">
+        <action
+            android:id="@+id/action_AchievementFragment_to_MapFragment"
+            app:destination="@id/MapFragment" />
+        <action
+            android:id="@+id/action_AchievementFragment_to_NewsFragment"
+            app:destination="@id/NewsFragment" />
+        <action
+            android:id="@+id/action_AchievementFragment_to_ChatlistFragment"
+            app:destination="@id/ChatlistFragment" />
+        <action
+            android:id="@+id/action_AchievementFragment_to_QuizFragment"
+            app:destination="@id/QuizFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/QuizFragment"
+        android:name="com.prototype.aishiteru.fragments.QuizFragment"
+        android:label="@string/quiz_activity_label"
+        tools:layout="@layout/fragment_quiz" >
+        <action
+            android:id="@+id/action_QuizFragment_to_AchievementFragment"
+            app:destination="@id/AchievementFragment" />
+        <action
+            android:id="@+id/action_QuizFragment_to_ChatlistFragment"
+            app:destination="@id/ChatlistFragment" />
+        <action
+            android:id="@+id/action_QuizFragment_to_MapFragment"
+            app:destination="@id/MapFragment" />
+        <action
+            android:id="@+id/action_QuizFragment_to_NewsFragment"
+            app:destination="@id/NewsFragment" />
     </fragment>
 </navigation>

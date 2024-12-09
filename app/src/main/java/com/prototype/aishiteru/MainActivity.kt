@@ -1,7 +1,6 @@
 package com.prototype.aishiteru
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -9,15 +8,31 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import com.google.android.material.snackbar.Snackbar
+import android.view.View
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.google.firebase.firestore.FirebaseFirestore
+import com.prototype.aishiteru.classes.CastItem
 import com.prototype.aishiteru.databinding.ActivityMainBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
 
+// For location and fused location provider
+
+
+class MainActivity : AppCompatActivity() {//, OnMapReadyCallback {
+    private val db = FirebaseFirestore.getInstance()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+    private lateinit var sessionUserId: String
+    private lateinit var sessionName: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setSession()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -28,11 +43,113 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+        binding.fabAchievements.setOnClickListener { view ->
+            /*Snackbar.make(view, "ACHIEVEMENTS", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
+                .setAnchorView(R.id.fabAchievements).show()*/
+
+            //binding.efabCheckin.visibility = View.VISIBLE
+            val currentDestinationId = navController.currentDestination?.id
+            val actionId = when (currentDestinationId) {
+                R.id.ChatlistFragment -> R.id.action_ChatlistFragment_to_AchievementFragment
+                R.id.ChatroomFragment -> R.id.action_ChatroomFragment_to_AchievementFragment
+                R.id.MapFragment -> R.id.action_MapFragment_to_AchievementFragment
+                R.id.NewsFragment -> R.id.action_NewsFragment_to_AchievementFragment
+                R.id.QuizFragment -> R.id.action_QuizFragment_to_AchievementFragment
+                else -> null
+            }
+            actionId?.let { navController.navigate(it) }
+
         }
+
+        binding.fabChats.setOnClickListener { view ->
+            /*Snackbar.make(view, "CHATS", Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .setAnchorView(R.id.fabChats).show()*/
+
+            //binding.efabCheckin.visibility = View.VISIBLE
+
+            val currentDestinationId = navController.currentDestination?.id
+            val actionId = when (currentDestinationId) {
+                R.id.ChatroomFragment -> R.id.action_ChatroomFragment_to_ChatlistFragment
+                R.id.MapFragment -> R.id.action_MapFragment_to_ChatlistFragment
+                R.id.AchievementFragment -> R.id.action_AchievementFragment_to_ChatlistFragment
+                R.id.NewsFragment -> R.id.action_NewsFragment_to_ChatlistFragment
+                R.id.QuizFragment -> R.id.action_QuizFragment_to_ChatlistFragment
+                else -> null
+            }
+            actionId?.let { navController.navigate(it) }
+
+        }
+
+        binding.fabMaps.setOnClickListener { view ->
+            /*Snackbar.make(view, "MAPS", Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .setAnchorView(R.id.fabMaps).show()*/
+
+            //binding.efabCheckin.visibility = View.VISIBLE
+
+            val currentDestinationId = navController.currentDestination?.id
+            val actionId = when (currentDestinationId) {
+                R.id.ChatlistFragment -> R.id.action_ChatlistFragment_to_MapFragment
+                R.id.ChatroomFragment -> R.id.action_ChatroomFragment_to_MapFragment
+                R.id.AchievementFragment -> R.id.action_AchievementFragment_to_MapFragment
+                R.id.NewsFragment -> R.id.action_NewsFragment_to_MapFragment
+                R.id.QuizFragment -> R.id.action_QuizFragment_to_MapFragment
+                else -> null
+            }
+
+            actionId?.let { navController.navigate(it) }
+        }
+
+        binding.fabNews.setOnClickListener { view ->
+            /*Snackbar.make(view, "NEWS", Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .setAnchorView(R.id.fabNews).show()*/
+
+            //binding.efabCheckin.visibility = View.VISIBLE
+
+            val currentDestinationId = navController.currentDestination?.id
+            val actionId = when (currentDestinationId) {
+                R.id.ChatlistFragment -> R.id.action_ChatlistFragment_to_NewsFragment
+                R.id.ChatroomFragment -> R.id.action_ChatroomFragment_to_NewsFragment
+                R.id.MapFragment -> R.id.action_MapFragment_to_NewsFragment
+                R.id.AchievementFragment -> R.id.action_AchievementFragment_to_NewsFragment
+                R.id.QuizFragment -> R.id.action_QuizFragment_to_NewsFragment
+                else -> null
+            }
+
+            actionId?.let { navController.navigate(it) }
+
+        }
+
+        binding.fabQuiz.setOnClickListener { view ->
+            /*Snackbar.make(view, "QUIZ", Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .setAnchorView(R.id.fabQuiz).show()*/
+
+            //.efabCheckin.visibility = View.VISIBLE
+
+            val currentDestinationId = navController.currentDestination?.id
+            val actionId = when (currentDestinationId) {
+                R.id.ChatlistFragment -> R.id.action_ChatlistFragment_to_QuizFragment
+                R.id.ChatroomFragment -> R.id.action_ChatroomFragment_to_QuizFragment
+                R.id.MapFragment -> R.id.action_MapFragment_to_QuizFragment
+                R.id.AchievementFragment -> R.id.action_AchievementFragment_to_QuizFragment
+                R.id.NewsFragment -> R.id.action_NewsFragment_to_QuizFragment
+                else -> null
+            }
+
+            actionId?.let { navController.navigate(it) }
+        }
+
+        /*
+        binding.efabCheckin.setOnClickListener { view ->
+            Snackbar.make(view, "Checked in!", Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .setAnchorView(R.id.fabNews).show()
+
+        }*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -56,4 +173,30 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
+
+    private fun setSession() {
+        this.sessionUserId = intent.getStringExtra("SESSION_UID").toString()
+
+        val usersCollection = db.collection("users")
+
+        usersCollection.document(sessionUserId).get()
+            .addOnSuccessListener { snapshot ->
+                val data = snapshot.data
+                sessionName = data?.get("name").toString()
+
+                DataGenerator.initializeDatabase(sessionName, sessionUserId)
+            }
+
+
+
+    }
+
+    fun getSessionUID () : String {
+        return this.sessionUserId
+    }
+
+    fun getSessionName () : String {
+        return this.sessionName
+    }
+
 }
